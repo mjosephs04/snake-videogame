@@ -1,74 +1,96 @@
 #include <iostream>
 #include <cmath>
-#include <vector>
+#include <SDL2/SDL.h>
 #include "SDL_Plotter.h"
 
 using namespace std;
 
-const int NUM_ROW = 1000;
-const int NUM_COL = 1000;
-const int SIZE    = 10;
+const int NUM_ROW = 800;
+const int NUM_COL = 800;
+
+const int SIZE = 25;
 
 enum Direction {UP, DOWN, LEFT, RIGHT};
 
-int main(int argc, char **argv){
+int main(int argc, const char * argv[]) {
+    
     char key;
+    int length = 10;
     SDL_Plotter g(NUM_ROW, NUM_COL);
-    int R = 20;
-    int G = 20;
-    int B = 255;
-
+    int R = 20, G = 20, B = 255;
+    //int xLoc = NUM_COL / 2, yLoc = NUM_ROW / 2;
+    int xLoc[length], yLoc[length];
+    int prevX, prevY;
     Direction dir = RIGHT;
-    int speed = 10;
-    int length = SIZE;
-    vector<int> xLoc(length);
-    vector<int> yLoc(length);
-
+    int speed = 20;
+    int skip = 0, skip_val = 10;
+    xLoc[0] = NUM_COL / 2;
+    xLoc[1] = NUM_COL / 2 - 25;
+    yLoc[0] = NUM_ROW / 2;
+    yLoc[1] = NUM_ROW / 2;
+  
     while(!g.getQuit()){
-        if(g.kbhit()){
+    
+    
+       if(g.kbhit()){
             key = g.getKey();
-
-            switch(key){
-                case UP_ARROW:    dir = UP;    break;
-                case DOWN_ARROW:  dir = DOWN;  break;
-                case LEFT_ARROW:  dir = LEFT;  break;
-                case RIGHT_ARROW: dir = RIGHT; break;
+           switch(key){
+               case UP_ARROW     : dir = UP;
+                                    break;
+                   
+               case DOWN_ARROW   : dir = DOWN;
+                                    break;
+                   
+               case LEFT_ARROW   : dir = LEFT;
+                                    break;
+                   
+               case RIGHT_ARROW  : dir = RIGHT;
+                                    break;
+                   
+           }
+        }
+    
+    
+    //process
+    //Erase
+    for(int i = 0; i < length; i++){
+        for(int y = 0; y < SIZE; y++){
+            for(int x = 0; x < SIZE; x++){
+                g.plotPixel(xLoc[i] + x, y + yLoc[i],255,255,255);
             }
         }
-
-        switch(dir){
-            case UP:    yLoc[0] -= SIZE; break;
-            case DOWN:  yLoc[0] += SIZE; break;
-            case LEFT:  xLoc[0] -= SIZE; break;
-            case RIGHT: xLoc[0] += SIZE; break;
-        }
-
-        //Erase
-        for(int i = 0; i <length; i++){
-            for(int y = 0; y < SIZE; y++){
-                for(int x = 0; x < SIZE; x++){
-                    g.plotPixel(xLoc[i] + x, yLoc[i], R, G, B);
-                }
+    }
+    
+    //copy cell locations
+    for(int i = length - 1; i > 0; i--){
+        xLoc[i] = xLoc[i-1];
+        yLoc[i] = yLoc[i-1];
+    }
+    switch(dir){
+        case RIGHT : xLoc[0] += SIZE;
+                    break;
+            
+        case LEFT  : xLoc[0] -= SIZE;
+                    break;
+            
+        case UP    : yLoc[0] -= SIZE;
+                    break;
+            
+        case DOWN  : yLoc[0] += SIZE;
+                    break;
+    }
+    
+    //Draw
+    for(int i =0; i < length; i++){
+        for(int y = 0; y < SIZE; y++){
+            for(int x = 0; x < SIZE; x++){
+                g.plotPixel(xLoc[i] + x, yLoc[i] + y, R, G, B);
             }
         }
-
-        //Copy cell locations
-        for(int i = length - 1; i > 0; i--){
-            xLoc[i] = xLoc[i-1];
-            yLoc[i] = yLoc[i-1];
-        }
-
-        //Draw
-        for(int i = 0; i < length; i++){
-            for(int y = 0; y < SIZE; y++){
-                for(int x = 0; x < SIZE; x++){
-                    g.plotPixel(xLoc[i] + x, yLoc[i] + y, R, G, B);
-                }
-            }
-        }
-
-        g.update();
-        g.Sleep(speed);
+    }
+    g.update();
+    g.Sleep(speed);      //takes miliseconds for its argument
+    
     }
     return 0;
 }
