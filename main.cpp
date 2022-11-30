@@ -2,13 +2,13 @@
 #include <cmath>
 #include <SDL2/SDL.h>
 #include "SDL_Plotter.h"
-
+#include "fruit.h"
 using namespace std;
 
-const int NUM_ROW = 800;
-const int NUM_COL = 800;
+const int NUM_ROW = 1000;
+const int NUM_COL = 1000;
 
-const int SIZE = 25;
+
 
 enum Direction {UP, DOWN, LEFT, RIGHT};
 
@@ -17,18 +17,22 @@ int main(int argc, const char * argv[]) {
     char key;
     int length = 10;
     SDL_Plotter g(NUM_ROW, NUM_COL);
-    int R = 20, G = 20, B = 255;
+    int R = 112, G = 112, B = 112;
     //int xLoc = NUM_COL / 2, yLoc = NUM_ROW / 2;
     int xLoc[length], yLoc[length];
     int prevX, prevY;
     Direction dir = RIGHT;
-    int speed = 20;
+    int speed = 100;
     int skip = 0, skip_val = 10;
     xLoc[0] = NUM_COL / 2;
     xLoc[1] = NUM_COL / 2 - 25;
     yLoc[0] = NUM_ROW / 2;
     yLoc[1] = NUM_ROW / 2;
-  
+    Fruit apple;
+    
+    srand(time(0));
+    
+    apple.setPoint((((rand()% (1000 / SIZE)) +1) * SIZE) , (((rand()% (1000 / SIZE)) +1) * SIZE));
     while(!g.getQuit()){
     
     
@@ -50,16 +54,19 @@ int main(int argc, const char * argv[]) {
            }
         }
     
-    
     //process
-    //Erase
-    for(int i = 0; i < length; i++){
-        for(int y = 0; y < SIZE; y++){
-            for(int x = 0; x < SIZE; x++){
-                g.plotPixel(xLoc[i] + x, y + yLoc[i],255,255,255);
+        
+    //draw black background
+        for(int y = 0; y < NUM_ROW; y++){
+            for(int x = 0; x < NUM_COL; x++){
+                if(y%SIZE == 0 || x%SIZE == 0){
+                    g.plotPixel(x, y,20,250,20);
+                }
+                else{
+                    g.plotPixel(x, y,0,0,0);
+                }
             }
         }
-    }
     
     //copy cell locations
     for(int i = length - 1; i > 0; i--){
@@ -79,15 +86,30 @@ int main(int argc, const char * argv[]) {
         case DOWN  : yLoc[0] += SIZE;
                     break;
     }
+    //draw background
+        
+    
     
     //Draw
     for(int i =0; i < length; i++){
         for(int y = 0; y < SIZE; y++){
             for(int x = 0; x < SIZE; x++){
-                g.plotPixel(xLoc[i] + x, yLoc[i] + y, R, G, B);
+                if(i == 0){
+                    g.plotPixel(xLoc[i] + x, yLoc[i] + y, 255, 153, 0);
+                }
+                else{
+                    g.plotPixel(xLoc[i] + x, yLoc[i] + y, R, G, B);
+                }
             }
         }
     }
+       
+        if(xLoc[0] == apple.getPoint().x && (yLoc[0] == apple.getPoint().y)){
+            apple.setPoint((((rand()% (1000 / SIZE -1 )) +1) * SIZE) , (((rand()% (1000 / SIZE -1 )) +1) * SIZE));
+            length++;
+        }
+        
+        apple.drawFriut(apple.getPoint() , g);
     g.update();
     g.Sleep(speed);      //takes miliseconds for its argument
     
@@ -95,57 +117,3 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
-
-
-//void drawCircle(point loc, int size, color c, SDL_Plotter& g);
-//
-//int main(int argc, char ** argv)
-//{
-//
-//    SDL_Plotter g(1000,1000);
-//    point p;
-//    color c;
-//    int size;
-//    Uint32 RGB;
-//
-//
-//
-//
-//
-//
-//
-//
-//    while (!g.getQuit())
-//    {
-//
-//		if(g.kbhit()){
-//			switch(toupper(g.getKey())){
-//				case 'C': g.clear();
-//				          break;
-//			}
-//		}
-//
-//		if(g.mouseClick()){
-//			p = g.getMouseClick();
-//			size = rand()%50;
-//			c.R  = rand()%256;
-//			c.G  = rand()%256;
-//			c.B  = rand()%256;
-//			drawCircle(p, size, c, g);
-//		}
-//		g.update();
-//
-//    }
-//}
-//
-//
-//void drawCircle(point loc, int size, color c, SDL_Plotter& g){
-//	for(double i = -size; i <= size;i+=0.1){
-//		for(double j = -size; j <= size; j+=0.1){
-//			if(i*i + j*j <= size*size){
-//				g.plotPixel(round(loc.x+i),round(loc.y+j),c);
-//			}
-//		}
-//	}
-//
-//}
