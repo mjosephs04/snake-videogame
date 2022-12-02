@@ -16,7 +16,7 @@ int main(int argc, const char * argv[]) {
     int xLoc[NUM_COL], yLoc[NUM_ROW];
     int prevX, prevY;
     Direction dir = RIGHT;
-    int speed = 50;
+    int speed = 70;
     bool gameOver = false, redScreen = true;
     
     
@@ -110,7 +110,7 @@ int main(int argc, const char * argv[]) {
                             
                         }
                         else{
-                            g.plotPixel(xLoc[i] + x, yLoc[i] + y, R, G, B);
+                            g.plotPixel(xLoc[i] + x, yLoc[i] + y, 112, 112, 112);
                         }
                     }
                 }
