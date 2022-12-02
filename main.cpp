@@ -13,13 +13,10 @@ int main(int argc, const char * argv[]) {
     char key;
     int length = 3;
     SDL_Plotter g(NUM_ROW, NUM_COL);
-    int R = 112, G = 112, B = 112;
-    //int xLoc = NUM_COL / 2, yLoc = NUM_ROW / 2;
     int xLoc[NUM_COL], yLoc[NUM_ROW];
     int prevX, prevY;
     Direction dir = RIGHT;
     int speed = 50;
-    int skip = 0, skip_val = 10;
     bool gameOver = false, redScreen = true;
     
     
