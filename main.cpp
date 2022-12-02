@@ -2,7 +2,7 @@
 #include <cmath>
 #include <SDL2/SDL.h>
 #include "SDL_Plotter.h"
-#include "fruit.h"
+#include "gameObject.h"
 using namespace std;
 
 
@@ -14,10 +14,9 @@ int main(int argc, const char * argv[]) {
     int length = 3;
     SDL_Plotter g(NUM_ROW, NUM_COL);
     int xLoc[NUM_COL], yLoc[NUM_ROW];
-    int prevX, prevY;
     Direction dir = RIGHT;
     int speed = 70;
-    bool gameOver = false, redScreen = true;
+    Game fun;
     
     
     for(int i = 0; i < NUM_COL; i++){
@@ -27,7 +26,7 @@ int main(int argc, const char * argv[]) {
         yLoc[i] = -2;
     }
     xLoc[0] = NUM_COL / 2;
-    xLoc[1] = NUM_COL / 2 - 25;
+    xLoc[1] = NUM_COL / 2 - SIZE;
     yLoc[0] = NUM_ROW / 2;
     yLoc[1] = NUM_ROW / 2;
     Fruit apple;
@@ -60,8 +59,8 @@ int main(int argc, const char * argv[]) {
     
     //process
         
-    //draw black background
-        if(!gameOver){
+    //draw  background
+        if(fun.checkState() != OVER){
             for(int y = 0; y < NUM_ROW; y++){
                 for(int x = 0; x < NUM_COL; x++){
                     if(y%SIZE == 0 || x%SIZE == 0){
@@ -92,13 +91,13 @@ int main(int argc, const char * argv[]) {
                     break;
             }
             //game check
+            
             if(xLoc[0] == -SIZE || xLoc[0] == NUM_COL){
-                gameOver = true;
+                fun.changeState(OVER);
             }
             if(yLoc[0] == -SIZE || yLoc[0] == NUM_ROW){
-                gameOver = true;
+                fun.changeState(OVER);
             }
-            
             
             
             //Draw
@@ -117,7 +116,7 @@ int main(int argc, const char * argv[]) {
             }
             
             if(xLoc[0] == apple.getPoint().x && (yLoc[0] == apple.getPoint().y)){
-                apple.setPoint((((rand()%(NUM_COL / SIZE) )) * SIZE) , (rand()%(NUM_ROW / SIZE) * SIZE));
+                apple.eatenFruit();
                 length++;
             }
             
@@ -129,7 +128,6 @@ int main(int argc, const char * argv[]) {
                     g.plotPixel(x, y,250,20,20);
                 }
             }
-         
         }
     g.update();
     g.Sleep(speed);      //takes miliseconds for its argument
