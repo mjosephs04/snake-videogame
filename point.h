@@ -1,12 +1,6 @@
-//
-//  Point.h
-//  program18
-//
-//  Created by Caleb Beckering on 11/16/22.
-//
-
 #ifndef Point_h
 #define Point_h
+#include "SDL_Plotter.h"
 
 #include <cmath>
 
@@ -22,6 +16,23 @@ struct Point_t{
    Point_t(int x = 0, int y = 0){
       this->x = x;
       this->y = y;
+   }
+
+   void draw(SDL_Plotter& g, color c = color(0, 0, 0)){
+       g.plotPixel(x, y, c);
+   }
+
+   Point_t& operator+ (const Point_t& p){
+        Point_t result;
+        result.x = x + p.x;
+        result.y = y + p.y;
+        return result;
+   }
+   Point_t& operator- (const Point_t& p){
+        Point_t result;
+        result.x = x - p.x;
+        result.y = y - p.y;
+        return result;
    }
 
    Point_t& operator= (const Point_t& p){
