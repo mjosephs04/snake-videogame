@@ -1,4 +1,3 @@
-
 #ifndef SNAKE_H_INCLUDED
 #define SNAKE_H_INCLUDED
 
@@ -10,14 +9,14 @@ class snake{
 private:
     int length;
     Direction dir;
-    color c;
+    color cBody, cHead;
 
     Point_t loc[MAX];
 
 public:
     snake(int l, color c = color(112, 112, 112)){
         length = l;
-        this->c = c;
+        cBody = c;
 
         for(int i = 0; i < MAX; i++){
             loc[i] = Point_t(-2, -2);
@@ -25,18 +24,41 @@ public:
 
         for(int i = 0; i < length; i++){
             loc[i] = Point_t(NUM_ROW / 2 - i*SIZE,
-                             NUM_COL / 2 - i*SIZE)
+                             NUM_COL / 2 - i*SIZE);
         }
     }
 
-    void setColor(color c = color(112, 112, 112)){
-        this->c = c;
+    void setColorBody(color c = color(112, 112, 112)){
+        cBody = c;
+    }
+    void setColorHead(color c = color(255, 153, 0)){
+        cHead = c;
     }
     void setDir(Direction d){
         dir = d;
     }
     void setLength(int l){
         length = l;
+    }
+
+    Point_t getFirstPt(void){
+        return loc[0];
+    }
+    color getColorBody(void){
+        return cBody;
+    }
+    color getColorHead(void){
+        return cHead;
+    }
+    Direction getDir(void){
+        return dir;
+    }
+    int getLength(void){
+        return length;
+    }
+
+    void incLength(int n){
+        length += n;
     }
 
     void advance(){
@@ -67,7 +89,13 @@ public:
         for(int i = 0; i < length; i++){
             for(int y = 0; y < SIZE; y++){
                 for(int x = 0; x < SIZE; x++){
-                    (loc[i] + Point_t(x, y)).draw(g, c);
+
+                    if(i == 0){
+                        (loc[i] + Point_t(x, y)).draw(g, cHead);
+                    }
+                    else{
+                        (loc[i] + Point_t(x, y)).draw(g, cBody);
+                    }
                 }
             }
         }
