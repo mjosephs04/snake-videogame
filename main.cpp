@@ -13,7 +13,7 @@ int main(int argc, char** argv) {
 // Data Abstraction
     char key;
     bool isPaused;
-    SDL_Plotter g(NUM_ROW, NUM_COL);
+    SDL_Plotter g(NUM_ROW + 50, NUM_COL);
     snake hiss(3);
     Fruit apple;
     Direction dir;
@@ -23,8 +23,7 @@ int main(int argc, char** argv) {
     color black;
 
     srand(time(0));
-    apple.setPoint((((rand()% (1000 / SIZE -1 )) +1) * SIZE) ,
-                   (((rand()% (1000 / SIZE -1 )) +1) * SIZE));
+    apple.eatenFruit();
 
 // Main Loop
     hiss.setColorHead();
@@ -87,9 +86,7 @@ int main(int argc, char** argv) {
 
         // Fruit
             if(hiss.getFirstPt().x == apple.getPoint().x &&
-               hiss.getFirstPt().y == apple.getPoint().y){
-                //apple.setPoint((((rand()% (1000 / SIZE -1 )) +1) * SIZE) ,
-                //               (((rand()% (1000 / SIZE -1 )) +1) * SIZE));
+                hiss.getFirstPt().y == apple.getPoint().y){
                 apple.eatenFruit();
                 hiss.incLength(1);
                 fun.addPoint();
