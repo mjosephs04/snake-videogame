@@ -1,3 +1,4 @@
+
 #ifndef Point_h
 #define Point_h
 #include "SDL_Plotter.h"
@@ -18,9 +19,9 @@ struct Point_t{
       this->y = y;
    }
 
-   void draw(SDL_Plotter& g, color c = color(0, 0, 0)){
-       g.plotPixel(x, y, c);
-   }
+   //void draw(SDL_Plotter& g, color c = color(0, 0, 0)){
+   //    g.plotPixel(x, y, c);
+   //}
 
    Point_t& operator+ (const Point_t& p){
         Point_t result;

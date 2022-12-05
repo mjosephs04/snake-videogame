@@ -1,3 +1,4 @@
+
 //
 //  fruit.cpp
 //  SDL Practice
@@ -36,5 +37,5 @@ void Fruit::setPoint(int x, int y){
 }
 
 void Fruit::eatenFruit(){
-    
+
 }

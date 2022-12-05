@@ -110,6 +110,7 @@ bool SDL_Plotter::getQuit(){
 			if(currentKeyStates[SDL_SCANCODE_UP])    key_queue.push(UP_ARROW);
 			if(currentKeyStates[SDL_SCANCODE_LEFT])  key_queue.push(LEFT_ARROW);
 			if(currentKeyStates[SDL_SCANCODE_RIGHT]) key_queue.push(RIGHT_ARROW);
+			if(currentKeyStates[SDL_SCANCODE_SPACE]) key_queue.push(SPACE);
 		}
 		else if(event.type == SDL_MOUSEBUTTONUP){
 			point p;

@@ -1,3 +1,4 @@
+
 //
 //  fruit.h
 //  SDL Practice
@@ -21,16 +22,16 @@ public:
         p.y = rand() %1000;
     }
     void eraseFruit(const Point_t&, SDL_Plotter&);
-    
+
     void drawFriut(const Point_t&, SDL_Plotter&);
-    
+
     Point_t getPoint() const;
-    
+
     void setPoint(int, int);
-    
+
     void eatenFruit();
-    
-    
+
+
 };
 
 #endif /* fruit_h */

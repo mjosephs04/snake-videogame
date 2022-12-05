@@ -1,3 +1,4 @@
+
 //
 //  gameObject.cpp
 //  SDL Practice
@@ -23,4 +24,11 @@ GameState Game::checkState(){
 
 void Game::changeState(GameState n){
     currState = n;
+}
+
+void Game::addPoint(){
+    score++;
+}
+int Game::getScore(){
+    return score;
 }
