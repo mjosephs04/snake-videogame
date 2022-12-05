@@ -19,7 +19,7 @@ public:
         cBody = c;
 
         for(int i = 0; i < MAX; i++){
-            loc[i] = Point_t(-2, -2);
+            loc[i] = Point_t(-10, -10);
         }
 
         for(int i = 0; i < length; i++){
@@ -64,19 +64,19 @@ public:
     void advance(){
         switch(dir){
             case UP:
-                    loc[0] = loc[0] + Point_t(0, SIZE);
+                    loc[0].y -= SIZE;
                     break;
 
             case DOWN:
-                    loc[0] = loc[0] - Point_t(0, SIZE);
+                    loc[0].y += SIZE;
                     break;
 
             case LEFT:
-                    loc[0] = loc[0] - Point_t(SIZE, 0);
+                    loc[0].x -= SIZE;
                     break;
 
             case RIGHT:
-                    loc[0] = loc[0] + Point_t(SIZE, 0);
+                    loc[0].x += SIZE;
                     break;
         }
 
@@ -91,10 +91,13 @@ public:
                 for(int x = 0; x < SIZE; x++){
 
                     if(i == 0){
-                        (loc[i] + Point_t(x, y)).draw(g, cHead);
+                        g.plotPixel(loc[i].x + x, loc[i].y + y, cHead);
+                        //(loc[i] + Point_t(x, y)).draw(g, cHead);
                     }
                     else{
-                        (loc[i] + Point_t(x, y)).draw(g, cBody);
+                        g.plotPixel(loc[i].x + x, loc[i].y + y, cBody);
+
+                        //(loc[i] + Point_t(x, y)).draw(g, cBody);
                     }
                 }
             }
