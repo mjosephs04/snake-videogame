@@ -1,4 +1,3 @@
-
 //
 //  fruit.cpp
 //  SDL Practice
@@ -10,14 +9,6 @@
 #include "fruit.h"
 
 
-
-void Fruit::eraseFruit(const Point_t& p, SDL_Plotter& g){
-    for(int y = 0; y < SIZE; y++){
-        for(int x = 0; x < SIZE; x++){
-            g.plotPixel(x, y, 0, 0, 0);
-        }
-    }
-}
 
 void Fruit::drawFriut(const Point_t& p, SDL_Plotter& g){
     for(int y = p.y; y < p.y+SIZE; y++){
@@ -37,5 +28,5 @@ void Fruit::setPoint(int x, int y){
 }
 
 void Fruit::eatenFruit(){
-
+    setPoint((((rand()%(NUM_COL / SIZE) )) * SIZE) , (rand()%(NUM_ROW / SIZE) * SIZE));
 }
