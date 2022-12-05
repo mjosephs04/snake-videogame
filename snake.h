@@ -4,6 +4,7 @@
 #include "SDl_PLotter.h"
 #include "point.h"
 #include "constants.h"
+#include "sound.h"
 
 class snake{
 private:
@@ -19,7 +20,7 @@ public:
         cBody = c;
 
         for(int i = 0; i < MAX; i++){
-            loc[i] = Point_t(-10, -10);
+            loc[i] = Point_t(-SIZE, -SIZE);
         }
 
         for(int i = 0; i < length; i++){
@@ -61,7 +62,29 @@ public:
         length += n;
     }
 
+    GameState checkDie(Sound& soundEffects, SDL_Plotter& g){
+        GameState retVal = PLAY;
+        for(int i = 1; i < length; i++){
+            if(loc[0].x == loc[i].x && loc[0].y == loc[i].y){
+                retVal = OVER;
+            }
+        }
+        if(loc[0].x == -SIZE || loc[0].x == NUM_COL){
+            retVal = OVER;
+        }
+        if(loc[0].y == -SIZE || loc[0].y == NUM_ROW){
+            retVal = OVER;
+        }
+        if(retVal == OVER){
+            soundEffects.dying(g);
+        }
+        return retVal;
+    }
+
     void advance(){
+        for(int i = length - 1; i > 0; i--){
+            loc[i] = loc[i-1];
+        }
         switch(dir){
             case UP:
                     loc[0].y -= SIZE;
@@ -80,9 +103,6 @@ public:
                     break;
         }
 
-        for(int i = length - 1; i > 0; i--){
-            loc[i] = loc[i-1];
-        }
     }
 
     void draw(SDL_Plotter& g){
@@ -92,12 +112,9 @@ public:
 
                     if(i == 0){
                         g.plotPixel(loc[i].x + x, loc[i].y + y, cHead);
-                        //(loc[i] + Point_t(x, y)).draw(g, cHead);
                     }
                     else{
                         g.plotPixel(loc[i].x + x, loc[i].y + y, cBody);
-
-                        //(loc[i] + Point_t(x, y)).draw(g, cBody);
                     }
                 }
             }
