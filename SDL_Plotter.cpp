@@ -1,3 +1,4 @@
+
 /*
  * SDL_Plotter.h
  *
@@ -111,6 +112,7 @@ bool SDL_Plotter::getQuit(){
 			if(currentKeyStates[SDL_SCANCODE_LEFT])  key_queue.push(LEFT_ARROW);
 			if(currentKeyStates[SDL_SCANCODE_RIGHT]) key_queue.push(RIGHT_ARROW);
 			if(currentKeyStates[SDL_SCANCODE_SPACE]) key_queue.push(SPACE);
+			if(currentKeyStates[SDL_SCANCODE_P]) key_queue.push(P);
 		}
 		else if(event.type == SDL_MOUSEBUTTONUP){
 			point p;

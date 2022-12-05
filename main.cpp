@@ -20,7 +20,6 @@ int main(int argc, char* argv[]) {
     Direction dir = RIGHT;
     int speed = 70;
     Game fun;
-    bool isPaused;
     int score = 0;
 
 
@@ -38,16 +37,10 @@ int main(int argc, char* argv[]) {
     Fruit apple;
     Sound soundEffects(g);
 
-
-    //vector<Point_t> snake;
-    //Point_t newSection;
-
     srand(time(0));
 
     apple.setPoint((((rand()%(NUM_COL / SIZE) )) * SIZE) , (rand()%(NUM_ROW / SIZE) * SIZE));
     while(!g.getQuit()){
-
-
        if(g.kbhit()){
             key = g.getKey();
            switch(key){
@@ -63,32 +56,38 @@ int main(int argc, char* argv[]) {
                case RIGHT_ARROW  : if(dir != 2){dir = RIGHT;};
                                     break;
 
-               case SPACE        : if(!isPaused){isPaused = true;}
-                                   else{isPaused = false;}
+               case SPACE        : if(fun.checkState() == PLAY){fun.changeState(PAUSE);}
+                                   else{fun.changeState(PLAY);}
+                                    break;
+
+               case P            : fun.changeState(PLAY);
                                     break;
 
            }
         }
 
     //process
-    if(!isPaused){
-        if(fun.checkState() != OVER){
-            for(int y = 0; y < NUM_ROW; y++){
-                for(int x = 0; x < NUM_COL; x++){
-                    if(y%SIZE == 0 || x%SIZE == 0){
-                        g.plotPixel(x, y,20,250,20);
-                    }
-                    else{
-                        g.plotPixel(x, y,0,0,0);
+
+    if(fun.checkState() == PLAY){
+        cout << "Started" << endl;
+
+        if(fun.checkState() == PLAY){
+                for(int y = 0; y < NUM_ROW; y++){
+                    for(int x = 0; x < NUM_COL; x++){
+                        if(y%SIZE == 0 || x%SIZE == 0){
+                            g.plotPixel(x, y,20,250,20);
+                        }
+                        else{
+                            g.plotPixel(x, y,0,0,0);
+                        }
                     }
                 }
-            }
 
             //copy cell locations
-            for(int i = length - 1; i > 0; i--){
-                xLoc[i] = xLoc[i-1];
-                yLoc[i] = yLoc[i-1];
-            }
+                for(int i = length - 1; i > 0; i--){
+                    xLoc[i] = xLoc[i-1];
+                    yLoc[i] = yLoc[i-1];
+                }
             switch(dir){
                 case RIGHT : xLoc[0] += SIZE;
                     break;
@@ -147,27 +146,38 @@ int main(int argc, char* argv[]) {
                 soundEffects.eating(g);
 
             }
-
+            //draws new fruit
             apple.drawFriut(apple.getPoint(), g);
 
         }
+
         else{
-            for(int y = 0; y < NUM_ROW + 50; y++){
+            //if is paused, show black screen
+            for(int y = 0; y < NUM_ROW; y++){
                 for(int x = 0; x < NUM_COL; x++){
-                    g.plotPixel(x, y, 250, 20, 20);
+                    g.plotPixel(x, y,0,0,0);
                 }
             }
         }
     }
-    else{
-        //if is paused, show black screen
-        for(int y = 0; y < NUM_ROW; y++){
+    else if(fun.checkState() == OVER){
+        //if it dies
+        for(int y = 0; y < NUM_ROW + 50; y++){
             for(int x = 0; x < NUM_COL; x++){
-                g.plotPixel(x, y,0,0,0);
+                g.plotPixel(x, y, 250, 20, 20);
             }
         }
     }
-    //draw  background
+    else{
+        //start screen
+        for(int y = 0; y < NUM_ROW; y++){
+            for(int x = 0; x < NUM_COL; x++){
+                g.plotPixel(x, y, 255, 255, 255);
+            }
+        }
+    }
+
+
 
 
     g.update();
@@ -176,4 +186,3 @@ int main(int argc, char* argv[]) {
     }
     return 0;
 }
-

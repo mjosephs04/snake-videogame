@@ -1,3 +1,4 @@
+
 /*
  * SDL_Plotter.h
  *
@@ -41,6 +42,7 @@ const char DOWN_ARROW  = 2;
 const char LEFT_ARROW  = 3;
 const char RIGHT_ARROW = 4;
 const char SPACE = 5;
+const char P = 6;
 const int RED_SHIFT    = 65536;
 const int GREEN_SHIFT  = 256;
 const int BLUE_SHIFT   = 1;
