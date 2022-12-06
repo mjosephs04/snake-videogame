@@ -1,3 +1,10 @@
+/* AUTHOR: Caleb Beckering, Ruth Edwards, Karina Garza, Mark Josephs
+ * ASSIGNMENT TITLE: Group Project: Snake
+ * ASSIGNMENT DESCRIPTION: Create a snake-themed game
+ * DUE DATE: 12-07-22
+ * DATE CREATED: 11-03-22
+ * DATE LAST MODIFIED: 12-07-22
+ */
 #include "snake.h"
 
 snake::snake(int l){
@@ -28,15 +35,6 @@ void snake::setLength(int l){
     length = l;
 }
 
-Point_t snake::getFirstPt(void){
-    return loc[0];
-}
-color snake::getColorBody(void){
-    return cBody;
-}
-color snake::getColorHead(void){
-    return cHead;
-}
 Direction snake::getDir(void){
     return dir;
 }
