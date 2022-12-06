@@ -156,9 +156,6 @@ int main(int argc, char** argv) {
         apple.saveToFile(fout);
         hiss.saveToFile(fout);
     }
-    else{
-        // save highscore
-    }
     fout.close();
 
 
