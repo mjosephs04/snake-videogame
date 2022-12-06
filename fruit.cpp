@@ -27,8 +27,18 @@ void Fruit::setPoint(int x, int y){
     p.y = y;
 }
 
-void Fruit::eatenFruit(){
-    setPoint( ((rand()%(NUM_COL / SIZE) ) * SIZE), (rand()%(NUM_ROW / SIZE) * SIZE));
+void Fruit::eatenFruit(snake s){
+    bool pointSet = false;
+    while(!pointSet){
+        pointSet= true;
+        setPoint( ((rand()%(NUM_COL / SIZE) ) * SIZE), (rand()%(NUM_ROW / SIZE) * SIZE));
+        for(int i = 0; i < s.getLength(); i++){
+            if(p.x == s.getPoint(i).x &&
+               p.y == s.getPoint(i).y){
+                pointSet = false;
+            }
+        }
+    }
 }
 
 void Fruit::initialize(ifstream& fin){

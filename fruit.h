@@ -12,6 +12,7 @@
 #include "SDL_Plotter.h"
 #include <SDL2/SDL.h>
 #include <fstream>
+#include "snake.h"
 
 class Fruit{
 private:
@@ -28,7 +29,7 @@ public:
 
     void setPoint(int, int);
 
-    void eatenFruit();
+    void eatenFruit(snake);
 
     void initialize(ifstream& fin);
     void saveToFile(ofstream& fout);
@@ -37,3 +38,4 @@ public:
 };
 
 #endif /* fruit_h */
+

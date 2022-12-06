@@ -1,187 +1,46 @@
 #ifndef SNAKE_H_INCLUDED
 #define SNAKE_H_INCLUDED
 
-#include <fstream>
 #include "SDl_PLotter.h"
 #include "point.h"
 #include "constants.h"
 #include "sound.h"
 
+
 class snake{
 private:
     int length;
-    Direction dir;
+    Direction dir = UP;
     color cBody, cHead;
 
     Point_t loc[MAX];
 
 public:
-    snake(int l){
-        length = l;
-        setColorBody();
-        setColorHead();
+    snake(int l = 3);
 
-        for(int i = 0; i < MAX; i++){
-            loc[i] = Point_t(-SIZE, -SIZE);
-        }
+    void setColorBody(color c = color(112, 112, 112));
+    void setColorHead(color c = color(255, 153, 0));
+    void setDir(Direction d);
+    void setLength(int l);
 
-        for(int i = 0; i < length; i++){
-            loc[i] = Point_t(NUM_ROW / 2 - i*SIZE,
-                             NUM_COL / 2 - i*SIZE);
-        }
-    }
+    Point_t getFirstPt(void);
+    Point_t getPoint(int);
+    color getColorBody(void);
+    color getColorHead(void);
+    Direction getDir(void);
+    int getLength(void);
 
-    void setColorBody(color c = color(112, 112, 112)){
-        cBody = c;
-    }
-    void setColorHead(color c = color(255, 153, 0)){
-        cHead = c;
-    }
-    void setDir(Direction d){
-        dir = d;
-    }
-    void setLength(int l){
-        length = l;
-    }
+    void incLength(int n);
 
-    Point_t getFirstPt(void){
-        return loc[0];
-    }
-    color getColorBody(void){
-        return cBody;
-    }
-    color getColorHead(void){
-        return cHead;
-    }
-    Direction getDir(void){
-        return dir;
-    }
-    int getLength(void){
-        return length;
-    }
+    GameState checkDie(Sound&, SDL_Plotter&);
 
-    void incLength(int n){
-        length += n;
-    }
+    void advance();
 
-    GameState checkDie(Sound& soundEffects, SDL_Plotter& g){
-        GameState retVal = PLAY;
-        for(int i = 1; i < length; i++){
-            if(loc[0].x == loc[i].x && loc[0].y == loc[i].y){
-                retVal = OVER;
-            }
-        }
-        if(loc[0].x == -SIZE || loc[0].x == NUM_COL){
-            retVal = OVER;
-        }
-        if(loc[0].y == -SIZE || loc[0].y == NUM_ROW){
-            retVal = OVER;
-        }
-        if(retVal == OVER){
-            soundEffects.dying(g);
-        }
-        return retVal;
-    }
-
-    void advance(){
-        for(int i = length - 1; i > 0; i--){
-            loc[i] = loc[i-1];
-        }
-        switch(dir){
-            case UP:
-                    loc[0].y -= SIZE;
-                    break;
-
-            case DOWN:
-                    loc[0].y += SIZE;
-                    break;
-
-            case LEFT:
-                    loc[0].x -= SIZE;
-                    break;
-
-            case RIGHT:
-                    loc[0].x += SIZE;
-                    break;
-        }
-
-    }
-
-    void draw(SDL_Plotter& g){
-        for(int i = 0; i < length; i++){
-            for(int y = 0; y < SIZE; y++){
-                for(int x = 0; x < SIZE; x++){
-
-                    if(i == 0){
-                        g.plotPixel(loc[i].x + x, loc[i].y + y, cHead);
-                    }
-                    else{
-                        g.plotPixel(loc[i].x + x, loc[i].y + y, cBody);
-                    }
-                }
-            }
-        }
-    }
-    void initialize(ifstream& fin){
-        string input;
-        char c;
-
-        getline(fin, input, ':');
-        fin >> c;
-        switch(c){
-            case 'U':
-                    dir = UP;
-                    break;
-
-            case 'D':
-                    dir = DOWN;
-                    break;
-
-            case 'L':
-                    dir = LEFT;
-                    break;
-
-            case 'R':
-                    dir = RIGHT;
-                    break;
-        }
-        getline(fin, input, ':');
-        fin >> length;
-        for(int i = 0; i < length; i++){
-            fin >> loc[i].x;
-            fin.ignore();
-            fin >> loc[i].y;
-            fin.ignore();
-        }
-    }
-
-    void saveToFile(ofstream& fout){
-        fout << "Direction: ";
-        switch(dir){
-            case UP:
-                    fout << 'U';
-                    break;
-
-            case DOWN:
-                    fout << 'D';
-                    break;
-
-            case LEFT:
-                    fout << 'L';
-                    break;
-
-            case RIGHT:
-                    fout << 'R';
-                    break;
-        }
-        fout << endl;
-        fout << "Length: " << length << endl;
-
-        for(int i = 0; i < length; i++){
-            fout << loc[i].x << ", " << loc[i].y << endl;
-        }
-    }
-
+    void draw(SDL_Plotter& g);
+    
+    void initialize(ifstream&);
+    
+    void saveToFile(ofstream&);
 };
 
 #endif // SNAKE_H_INCLUDED
