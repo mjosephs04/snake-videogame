@@ -1,4 +1,3 @@
-
 /*
  * SDL_Plotter.h
  *
@@ -41,14 +40,15 @@ const char UP_ARROW    = 1;
 const char DOWN_ARROW  = 2;
 const char LEFT_ARROW  = 3;
 const char RIGHT_ARROW = 4;
-const char SPACE = 5;
-const char P = 6;
 const int RED_SHIFT    = 65536;
 const int GREEN_SHIFT  = 256;
 const int BLUE_SHIFT   = 1;
 const int ALPHA_SHIFT  = 16777216;
 const int WHITE        = 255;
 const int MAX_THREAD   = 100;
+
+const char SPACE = 5;
+const char P = 6;
 
 
 //Point
@@ -62,8 +62,10 @@ struct point{
 //Color
 struct color{
 	unsigned int R,G,B;
-	color(){
-		R = G = B = 0;
+	color(unsigned int R = 0, unsigned int G = 0, unsigned int B = 0){
+		this->R = R;
+		this->G = G;
+		this->B = B;
 	}
 };
 
