@@ -1,0 +1,9 @@
+High Score: 16
+Saved Data: 
+Fruit: 50, 450
+Direction: D
+Length: 4
+750, 600
+750, 550
+750, 500
+750, 450

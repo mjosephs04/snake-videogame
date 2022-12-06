@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <cmath>
 #include <ctime>
 #include <SDL2/SDL.h>
@@ -12,8 +13,9 @@ using namespace std;
 int main(int argc, char** argv) {
 // Data Abstraction
     char key;
-    bool isPaused;
-    SDL_Plotter g(NUM_ROW + 50, NUM_COL);
+    int highScore;
+
+    SDL_Plotter g(NUM_ROW, NUM_COL);
     snake hiss(3);
     Fruit apple;
     Direction dir;
@@ -22,11 +24,25 @@ int main(int argc, char** argv) {
 
     color black;
 
+    // Initialize
     srand(time(0));
     apple.eatenFruit();
 
-// Main Loop
-    hiss.setColorHead();
+    //highScore = hiss.initialize("SnakeSave.txt");
+
+    ifstream fin;
+    ofstream fout;
+    string input;
+    fin.open("SnakeSave.txt");
+    getline(fin, input, ':');
+    fin >> highScore;
+    if(getline(fin, input, ':')){
+        apple.initialize(fin);
+        hiss.initialize(fin);
+    }
+    fin.close();
+
+    // Main Loop
     while(!g.getQuit()){
     //UI
         if(g.kbhit()){
@@ -79,14 +95,15 @@ int main(int argc, char** argv) {
             if(fun.checkState() == PLAY){
                 // Advance
                 hiss.advance();
+                // die check
+                fun.changeState(hiss.checkDie(soundEffects, g));
             }
-
-            // die check
-            fun.changeState(hiss.checkDie(soundEffects, g));
 
         // Fruit
             if(hiss.getFirstPt().x == apple.getPoint().x &&
-                hiss.getFirstPt().y == apple.getPoint().y){
+               hiss.getFirstPt().y == apple.getPoint().y){
+                //apple.setPoint((((rand()% (1000 / SIZE -1 )) +1) * SIZE) ,
+                //               (((rand()% (1000 / SIZE -1 )) +1) * SIZE));
                 apple.eatenFruit();
                 hiss.incLength(1);
                 fun.addPoint();
@@ -123,11 +140,27 @@ int main(int argc, char** argv) {
 
         }
 
+        // Score stuff
+        if(fun.getScore() > highScore){
+            highScore = fun.getScore();
+        }
 
         g.update();
         g.Sleep(SPEED);
-
-
     }
+
+    fout.open("SnakeSave.txt");
+    fout << "High Score: " << highScore << endl;
+    if(fun.checkState() != OVER){
+        fout << "Saved Data: " << endl;
+        apple.saveToFile(fout);
+        hiss.saveToFile(fout);
+    }
+    else{
+        // save highscore
+    }
+    fout.close();
+
+
     return 0;
 }

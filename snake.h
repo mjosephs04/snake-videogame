@@ -1,6 +1,7 @@
 #ifndef SNAKE_H_INCLUDED
 #define SNAKE_H_INCLUDED
 
+#include <fstream>
 #include "SDl_PLotter.h"
 #include "point.h"
 #include "constants.h"
@@ -15,9 +16,10 @@ private:
     Point_t loc[MAX];
 
 public:
-    snake(int l, color c = color(112, 112, 112)){
+    snake(int l){
         length = l;
-        cBody = c;
+        setColorBody();
+        setColorHead();
 
         for(int i = 0; i < MAX; i++){
             loc[i] = Point_t(-SIZE, -SIZE);
@@ -120,6 +122,66 @@ public:
             }
         }
     }
+    void initialize(ifstream& fin){
+        string input;
+        char c;
+
+        getline(fin, input, ':');
+        fin >> c;
+        switch(c){
+            case 'U':
+                    dir = UP;
+                    break;
+
+            case 'D':
+                    dir = DOWN;
+                    break;
+
+            case 'L':
+                    dir = LEFT;
+                    break;
+
+            case 'R':
+                    dir = RIGHT;
+                    break;
+        }
+        getline(fin, input, ':');
+        fin >> length;
+        for(int i = 0; i < length; i++){
+            fin >> loc[i].x;
+            fin.ignore();
+            fin >> loc[i].y;
+            fin.ignore();
+        }
+    }
+
+    void saveToFile(ofstream& fout){
+        fout << "Direction: ";
+        switch(dir){
+            case UP:
+                    fout << 'U';
+                    break;
+
+            case DOWN:
+                    fout << 'D';
+                    break;
+
+            case LEFT:
+                    fout << 'L';
+                    break;
+
+            case RIGHT:
+                    fout << 'R';
+                    break;
+        }
+        fout << endl;
+        fout << "Length: " << length << endl;
+
+        for(int i = 0; i < length; i++){
+            fout << loc[i].x << ", " << loc[i].y << endl;
+        }
+    }
+
 };
 
 #endif // SNAKE_H_INCLUDED

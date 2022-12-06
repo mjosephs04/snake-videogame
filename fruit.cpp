@@ -28,5 +28,18 @@ void Fruit::setPoint(int x, int y){
 }
 
 void Fruit::eatenFruit(){
-    setPoint((((rand()%(NUM_COL / SIZE) )) * SIZE) , (rand()%(NUM_ROW / SIZE) * SIZE));
+    setPoint( ((rand()%(NUM_COL / SIZE) ) * SIZE), (rand()%(NUM_ROW / SIZE) * SIZE));
+}
+
+void Fruit::initialize(ifstream& fin){
+    string input;
+    getline(fin, input, ':');
+    fin >> p.x;
+    fin.ignore();
+    fin >> p.y;
+    fin.ignore();
+}
+
+void Fruit::saveToFile(ofstream& fout){
+    fout << "Fruit: " << p.x << ", " << p.y << endl;
 }
