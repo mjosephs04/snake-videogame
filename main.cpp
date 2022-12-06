@@ -15,6 +15,10 @@ int main(int argc, char** argv) {
     char key;
     int highScore;
 
+    ifstream fin;
+    ofstream fout;
+    string input;
+
     SDL_Plotter g(NUM_ROW, NUM_COL);
     snake hiss(3);
     Fruit apple;
@@ -28,11 +32,6 @@ int main(int argc, char** argv) {
     srand(time(0));
     apple.eatenFruit();
 
-    //highScore = hiss.initialize("SnakeSave.txt");
-
-    ifstream fin;
-    ofstream fout;
-    string input;
     fin.open("SnakeSave.txt");
     getline(fin, input, ':');
     fin >> highScore;
@@ -44,7 +43,7 @@ int main(int argc, char** argv) {
 
     // Main Loop
     while(!g.getQuit()){
-    //UI
+    //User Interface
         if(g.kbhit()){
             key = g.getKey();
 
@@ -83,6 +82,7 @@ int main(int argc, char** argv) {
             }
         }
 
+        //Check States
         if(fun.checkState() == START){
             for(int y = 0; y < NUM_ROW + SIZE; y++){
                 for(int x = 0; x > NUM_COL; x++){
@@ -91,23 +91,22 @@ int main(int argc, char** argv) {
             }
         }
         else if(fun.checkState() == PLAY || fun.checkState() == PAUSE){
-        // Check states
             if(fun.checkState() == PLAY){
                 // Advance
                 hiss.advance();
+
                 // die check
                 fun.changeState(hiss.checkDie(soundEffects, g));
-            }
 
-        // Fruit
-            if(hiss.getFirstPt().x == apple.getPoint().x &&
-               hiss.getFirstPt().y == apple.getPoint().y){
-                //apple.setPoint((((rand()% (1000 / SIZE -1 )) +1) * SIZE) ,
-                //               (((rand()% (1000 / SIZE -1 )) +1) * SIZE));
-                apple.eatenFruit();
-                hiss.incLength(1);
-                fun.addPoint();
-                soundEffects.eating(g);
+                // Fruit
+                if(hiss.getFirstPt().x == apple.getPoint().x &&
+                   hiss.getFirstPt().y == apple.getPoint().y){
+                    apple.eatenFruit();
+                    hiss.incLength(1);
+                    fun.addPoint();
+                    soundEffects.eating(g);
+                }
+
             }
 
         // Draw
