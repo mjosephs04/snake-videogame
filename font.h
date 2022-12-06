@@ -12,11 +12,10 @@ private:
     int number;
     //int zero[264];
     //int letter[1274];
-    ifstream iFile;
 
 public:
-    void printFont(string fileName, int yBaseLocation , int xBaseLocation, SDL_Plotter&);
-    void printFontLetter(string fileName, int yBaseLocation , int xBaseLocation, SDL_Plotter&);
+    void printFont(string fileName, int xBaseLocation , int yBaseLocation, SDL_Plotter& g, int thickness, int R, int G, int B);
+    void printFontLetter(string fileName, int xBaseLocation , int yBaseLocation, SDL_Plotter& g, int thickness, int, int, int);
 
 };
 
