@@ -1,18 +1,18 @@
-//
-//  fruit.h
-//  SDL Practice
-//
-//  Created by Caleb Beckering on 11/16/22.
-//
+/* AUTHOR: Caleb Beckering, Ruth Edwards, Karina Garza, Mark Josephs
+ * ASSIGNMENT TITLE: Group Project: Snake
+ * ASSIGNMENT DESCRIPTION: Create a snake-themed game
+ * DUE DATE: 12-07-22
+ * DATE CREATED: 11-03-22
+ * DATE LAST MODIFIED: 12-07-22
+ */
 
 #ifndef fruit_h
 #define fruit_h
-#include "constants.h"
-#include "point.h"
 #include "SDL_Plotter.h"
-#include <SDL2/SDL.h>
-#include <fstream>
+#include "point.h"
+#include "constants.h"
 #include "snake.h"
+
 
 class Fruit{
 private:
@@ -23,7 +23,7 @@ public:
         p.y = rand() %NUM_COL;
     }
 
-    void drawFriut(const Point_t&, SDL_Plotter&);
+    void draw(SDL_Plotter&);
 
     Point_t getPoint() const;
 
@@ -38,4 +38,3 @@ public:
 };
 
 #endif /* fruit_h */
-

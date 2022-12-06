@@ -1,16 +1,18 @@
-//
-//  fruit.cpp
-//  SDL Practice
-//
-//  Created by Caleb Beckering on 11/16/22.
-//
+/* AUTHOR: Caleb Beckering, Ruth Edwards, Karina Garza, Mark Josephs
+ * ASSIGNMENT TITLE: Group Project: Snake
+ * ASSIGNMENT DESCRIPTION: Create a snake-themed game
+ * DUE DATE: 12-07-22
+ * DATE CREATED: 11-03-22
+ * DATE LAST MODIFIED: 12-07-22
+ */
 
 #include <stdio.h>
 #include "fruit.h"
+#include <fstream>
 
 
 
-void Fruit::drawFriut(const Point_t& p, SDL_Plotter& g){
+void Fruit::draw(SDL_Plotter& g){
     for(int y = p.y; y < p.y+SIZE; y++){
         for(int x = p.x; x < p.x+SIZE; x++){
             g.plotPixel(x, y, 200, 20, 20);

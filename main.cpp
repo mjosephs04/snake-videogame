@@ -1,17 +1,16 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
-#include <iomanip>
 #include <ctime>
-#include <sstream>
-#include <SDL2/SDL.h>
+
 #include "SDL_Plotter.h"
+#include <SDL2/SDL.h>
+
+#include "fruit.h"
 #include "gameObject.h"
 #include "snake.h"
-#include "fruit.h"
 #include "sound.h"
-#include "font.h"
-using namespace std;
+#include "constants.h"
 
 int main(int argc, char** argv) {
 // Data Abstraction
@@ -22,19 +21,18 @@ int main(int argc, char** argv) {
     ofstream fout;
     string input;
 
-    SDL_Plotter g(NUM_ROW + 50, NUM_COL);
+    SDL_Plotter g(NUM_ROW, NUM_COL);
     snake hiss(3);
     Fruit apple;
     Direction dir;
     Game fun;
     Sound soundEffects(g);
-    font ffont;
 
     color black;
 
     // Initialize
     srand(time(0));
-    apple.eatenFruit();
+    apple.eatenFruit(hiss);
 
     fin.open("SnakeSave.txt");
     getline(fin, input, ':');
@@ -44,8 +42,6 @@ int main(int argc, char** argv) {
         hiss.initialize(fin);
     }
     fin.close();
-
-    fun.changeState(START);
 
     // Main Loop
     while(!g.getQuit()){
@@ -95,22 +91,6 @@ int main(int argc, char** argv) {
                     g.plotPixel(x, y, 255, 255, 255);
                 }
             }
-            ffont.printFontLetter("p.txt", 190, 150, g, 3, 0, 0, 0);
-            ffont.printFontLetter("r.txt", 310, 150, g, 3, 0, 0, 0);
-            ffont.printFontLetter("e.txt", 430, 150, g, 3, 0, 0, 0);
-            ffont.printFontLetter("s.txt", 550, 150, g, 3, 0, 0, 0);
-            ffont.printFontLetter("s.txt", 670, 150, g, 3, 0, 0, 0);
-            //newline
-            ffont.printFontLetter("p.txt", 250, 250, g, 3, 0, 0, 0);
-            ffont.printFontLetter("t.txt", 490, 250, g, 3, 0, 0, 0);
-            ffont.printFontLetter("o.txt", 610, 250, g, 3, 0, 0, 0);
-            //newline
-            ffont.printFontLetter("s.txt", 190, 350, g, 3, 0, 0, 0);
-            ffont.printFontLetter("t.txt", 310, 350, g, 3, 0, 0, 0);
-            ffont.printFontLetter("a.txt", 430, 350, g, 3, 0, 0, 0);//need A
-            ffont.printFontLetter("r.txt", 550, 350, g, 3, 0, 0, 0);
-            ffont.printFontLetter("t.txt", 670, 350, g, 3, 0, 0, 0);
-
         }
         else if(fun.checkState() == PLAY || fun.checkState() == PAUSE){
             if(fun.checkState() == PLAY){
@@ -121,9 +101,9 @@ int main(int argc, char** argv) {
                 fun.changeState(hiss.checkDie(soundEffects, g));
 
                 // Fruit
-                if(hiss.getFirstPt().x == apple.getPoint().x &&
-                   hiss.getFirstPt().y == apple.getPoint().y){
-                    apple.eatenFruit();
+                if(hiss.getPoint(0).x == apple.getPoint().x &&
+                   hiss.getPoint(0).y == apple.getPoint().y){
+                    apple.eatenFruit(hiss);
                     hiss.incLength(1);
                     fun.addPoint();
                     soundEffects.eating(g);
@@ -145,36 +125,10 @@ int main(int argc, char** argv) {
             }
 
             // Draw Fruit
-            apple.drawFriut(apple.getPoint() , g);
+            apple.draw(g);
 
             // Draw Snake
             hiss.draw(g);
-
-            //draws the white bar at bottom
-            for(int y = NUM_ROW; y < NUM_ROW + SIZE; y++){
-                    for(int x = 0; x < NUM_COL; x++){
-                        g.plotPixel(x, y, 255, 255, 255);
-                    }
-                }
-
-            ffont.printFontLetter("s.txt", 300, 710, g, 1, 0, 0, 0);
-            ffont.printFontLetter("c.txt", 340, 710, g, 1, 0, 0, 0);
-            ffont.printFontLetter("o.txt", 380, 710, g, 1, 0, 0, 0);
-            ffont.printFontLetter("r.txt", 420, 710, g, 1, 0, 0, 0);
-            ffont.printFontLetter("e.txt", 460, 710, g, 1, 0, 0, 0);
-
-            if(fun.getScore() < 10){
-                stringstream ss;
-                int num = fun.getScore();
-                ss << num;
-                string name = ss.str();
-                ffont.printFont(name + ".txt", 520, 702, g, 3, 0, 0, 0);
-                ss.flush();
-
-            }
-
-
-
 
 
         }
@@ -185,15 +139,6 @@ int main(int argc, char** argv) {
                 }
             }
 
-            ffont.printFontLetter("g.txt", 100, 150, g, 5, 0, 0, 0);
-            ffont.printFontLetter("o.txt", 300, 150, g, 5, 0, 0, 0); //need A
-            ffont.printFontLetter("o.txt", 500, 150, g, 5, 0, 0, 0); //need M
-            ffont.printFontLetter("e.txt", 700, 150, g, 5, 0, 0, 0);
-            //new line
-            ffont.printFontLetter("o.txt", 100, 300, g, 5, 0, 0, 0);
-            ffont.printFontLetter("v.txt", 300, 300, g, 5, 0, 0, 0);
-            ffont.printFontLetter("e.txt", 500, 300, g, 5, 0, 0, 0);
-            ffont.printFontLetter("r.txt", 700, 300, g, 5, 0, 0, 0);
         }
 
         // Score stuff
