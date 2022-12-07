@@ -1,7 +1,7 @@
 #include "font.h"
 
 
-void font::printFont(string fileName, int xBaseLocation , int yBaseLocation, SDL_Plotter& g, int thickness, int R, int G, int B){
+void font::printFontNumber(string fileName, int xBaseLocation , int yBaseLocation, SDL_Plotter& g, int thickness, int R, int G, int B){
     ifstream iFile;
     int zero[264];
     iFile.open(fileName);
@@ -55,4 +55,51 @@ void font::printFontLetter(string fileName, int xBaseLocation , int yBaseLocatio
     iFile.close();
 }
 
+void font::printScoreSingle(int score, font& text, SDL_Plotter& g, int x, int y, int thickness){
+    stringstream ss;
+    ss << score;
+    string name = ss.str();
+    text.printFontNumber(name + ".txt", x, y, g, thickness, 0, 0, 0);
+    ss.flush();
+}
+
+
+void font::printScoreDouble(int score, font& text, SDL_Plotter& g, int x1, int y1, int x2, int y2, int thickness){
+    stringstream ss;
+    ss << score;
+    string number = ss.str();
+    char first = number.at(0);
+    char second = number.at(1);
+    string fname = "";
+    string fname1 = "";
+    fname = fname + first;
+    fname.append(".txt");
+    fname1 = fname1 + second;
+    fname1.append(".txt");
+    text.printFontNumber(fname, x1, y1, g, thickness, 0, 0, 0);
+    text.printFontNumber(fname1, x2, y2, g, thickness, 0, 0, 0);
+    ss.flush();
+}
+
+void font::printScoreTriple(int score, font& text, SDL_Plotter& g, int x1, int y1, int x2, int y2, int x3, int y3, int thickness){
+    stringstream ss;;
+    ss << score;
+    string number = ss.str();
+    char first = number.at(0);
+    char second = number.at(1);
+    char third = number.at(2);
+    string fname = "";
+    string fname1 = "";
+    string fname2 = "";
+    fname = fname + first;
+    fname.append(".txt");
+    fname1 = fname1 + second;
+    fname1.append(".txt");
+    fname2 = fname2 + third;
+    fname2.append(".txt");
+    text.printFontNumber(fname, x1, y1, g, thickness, 0, 0, 0);
+    text.printFontNumber(fname1, x2, y2, g, thickness, 0, 0, 0);
+    text.printFontNumber(fname2, x3, y3, g, thickness, 0, 0, 0);
+    ss.flush();
+}
 

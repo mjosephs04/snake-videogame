@@ -49,6 +49,7 @@ const int MAX_THREAD   = 100;
 
 const char SPACE = 5;
 const char P = 6;
+const char R = 7;
 
 
 //Point

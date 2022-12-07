@@ -26,7 +26,7 @@ public:
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     Fruit(){
     }
-    
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * description: draw the fruit                                            *
     * return: void                                                           *
@@ -42,7 +42,7 @@ public:
     * postcondition: nothing is changed, Point is returned                   *
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     Point_t getPoint() const;
-    
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * description: mutator function for fruit's Point_t                      *
     * return: void                                                           *

@@ -24,13 +24,17 @@ private:
     font ffont;
     Scoreboard highScore;
 public:
-    
+
     Game();
     GameState checkState();
     void changeState(GameState);
     void addPoint();
     int getScore();
     void displayYourScore(SDL_Plotter&);
+    void resetScore();
+    void initialize(ifstream&);
+    void saveToFile(ofstream&);
+
 
 };
 

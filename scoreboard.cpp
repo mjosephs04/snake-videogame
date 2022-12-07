@@ -7,7 +7,9 @@
 
 #include "scoreboard.h"
 #include "constants.h"
-void Scoreboard::saveToFile(fstream& fout){
+#include "font.h"
+
+void Scoreboard::saveToFile(ofstream& fout){
     fout << "High Score: " << highScore << endl;
 }
 void Scoreboard::initialize(ifstream& fin){
@@ -23,64 +25,27 @@ void Scoreboard::setHighScore(int score){
     highScore = score;
 }
 
-void Scoreboard::printHighScore(SDL_Plotter& g){
-    ffont.printFontLetter("H.txt", 0, 600, g, 3, 0, 0, 0);
-    ffont.printFontLetter("I.txt", 100, 600, g, 3, 0, 0, 0);
-    ffont.printFontLetter("G.txt", 200, 600, g, 3, 0, 0, 0);
-    ffont.printFontLetter("H.txt", 0, 600, g, 3, 0, 0, 0);
-    
-    ffont.printFontLetter("S.txt", 500, 600, g, 3, 0, 0, 0);
-    ffont.printFontLetter("C.txt", 600, 600, g, 3, 0, 0, 0);
-    ffont.printFontLetter("O.txt", 700, 600, g, 3, 0, 0, 0);
-    ffont.printFontLetter("R.txt", 800, 600, g, 3, 0, 0, 0);
-    ffont.printFontLetter("E.txt", 900, 600, g, 3, 0, 0, 0);
-    
-    if(highScore < 10){
-        stringstream ss;
-        int num = highScore;
-        ss << num;
-        string name = ss.str();
-        ffont.printFont(name + ".txt", 520, 702, g, 3, 0, 0, 0);
-        ss.flush();
+void Scoreboard::printHighScore(SDL_Plotter& g, font& text){
 
-    }
-    else if(highScore >= 10 && (highScore < 100)){
-        stringstream ss;
-        int num = highScore;
-        ss << num;
-        string number = ss.str();
-        char first = number.at(0);
-        char second = number.at(1);
-        string fname = "";
-        string fname1 = "";
-        fname = fname + first;
-        fname.append(".txt");
-        fname1 = fname1 + second;
-        fname1.append(".txt");
-        ffont.printFont(fname, 490, 702, g, 3, 0, 0, 0);
-        ffont.printFont(fname1, 535, 702, g, 3, 0, 0, 0);
-        ss.flush();
-    }
-    else{
-        stringstream ss;
-        int num = highScore;
-        ss << num;
-        string number = ss.str();
-        char first = number.at(0);
-        char second = number.at(1);
-        char third = number.at(3);
-        string fname = "";
-        string fname1 = "";
-        string fname2 = "";
-        fname = fname + first;
-        fname.append(".txt");
-        fname1 = fname1 + second;
-        fname1.append(".txt");
-        fname2 = fname2 + third;
-        fname2.append(".txt");
-        ffont.printFont(fname, 490, 702, g, 3, 0, 0, 0);
-        ffont.printFont(fname1, 535, 702, g, 3, 0, 0, 0);
-        ffont.printFont(fname2, 535, 702, g, 3, 0, 0, 0);
-        ss.flush();
-    }
+    ffont.printFontLetter("h.txt", 75, 600, g, 2, 0, 0, 0);
+    ffont.printFontLetter("i.txt", 150, 600, g, 2, 0, 0, 0);
+    ffont.printFontLetter("g.txt", 225, 600, g, 2, 0, 0, 0);
+    ffont.printFontLetter("h.txt", 300, 600, g, 2, 0, 0, 0);
+
+    ffont.printFontLetter("s.txt", 425, 600, g, 2, 0, 0, 0);
+    ffont.printFontLetter("c.txt", 500, 600, g, 2, 0, 0, 0);
+    ffont.printFontLetter("o.txt", 575, 600, g, 2, 0, 0, 0);
+    ffont.printFontLetter("r.txt", 650, 600, g, 2, 0, 0, 0);
+    ffont.printFontLetter("e.txt", 725, 600, g, 2, 0, 0, 0);
+
+            if(highScore < 10){
+                text.printScoreSingle(highScore, text, g, 850, 595, 5);
+            }
+            else if(highScore < 100){
+                text.printScoreDouble(highScore, text, g, 810, 595, 875, 595, 5);
+            }
+            else{
+                text.printScoreTriple(highScore, text, g, 810, 600, 860, 600, 910, 600, 4);
+            }
+
 }

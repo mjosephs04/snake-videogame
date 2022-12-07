@@ -19,7 +19,7 @@
 class snake{
 private:
     int length;
-    Direction dir = UP;
+    Direction dir;
     color cBody, cHead;
     Point_t loc[MAX];
 
@@ -115,6 +115,14 @@ public:
     * postcondition: snake is drawn to plotter                               *
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     void draw(SDL_Plotter& g);
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    * description: reset snake position                                      *
+    * return: void                                                           *
+    * precondition: snake object exists                                      *
+    * postcondition: snake is reinitialized                                  *
+    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    void reset();
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * description: initialize snake to last saved data in file               *

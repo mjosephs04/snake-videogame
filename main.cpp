@@ -11,6 +11,7 @@
 #include "fruit.h"
 #include "sound.h"
 #include "font.h"
+#include "scoreboard.h"
 using namespace std;
 
 int main(int argc, char** argv) {
@@ -28,19 +29,22 @@ int main(int argc, char** argv) {
     Direction dir;
     Game fun;
     Sound soundEffects(g);
-    font ffont;
+    font text;
+    Scoreboard currHighScore;
+
+
 
     color black;
 
     // Initialize
     srand(time(0));
-    apple.eatenFruit();
+    apple.eatenFruit(hiss);
 
     fin.open("SnakeSave.txt");
-    getline(fin, input, ':');
-    fin >> highScore;
+    currHighScore.initialize(fin);
     if(getline(fin, input, ':')){
         apple.initialize(fin);
+        fun.initialize(fin);
         hiss.initialize(fin);
     }
     fin.close();
@@ -83,35 +87,46 @@ int main(int argc, char** argv) {
                     }
                     break;
                 case P:
-                    fun.changeState(PLAY);
+                    if(fun.checkState() != OVER){
+                        fun.changeState(PLAY);
+                    }
+                    break;
+                case R:
+                    fun.changeState(START);
+                    hiss.reset();
+                    fun.resetScore();
                     break;
             }
         }
 
         //Check States
         if(fun.checkState() == START){
+
+
             for(int y = 0; y < NUM_ROW + SIZE; y++){
-                for(int x = 0; x > NUM_COL; x++){
+                for(int x = 0; x < NUM_COL; x++){
                     g.plotPixel(x, y, 255, 255, 255);
                 }
             }
-            ffont.printFontLetter("p.txt", 190, 150, g, 3, 0, 0, 0);
-            ffont.printFontLetter("r.txt", 310, 150, g, 3, 0, 0, 0);
-            ffont.printFontLetter("e.txt", 430, 150, g, 3, 0, 0, 0);
-            ffont.printFontLetter("s.txt", 550, 150, g, 3, 0, 0, 0);
-            ffont.printFontLetter("s.txt", 670, 150, g, 3, 0, 0, 0);
+            text.printFontLetter("P.txt", 190, 150, g, 3, 0, 0, 0);
+            text.printFontLetter("r.txt", 310, 150, g, 3, 0, 0, 0);
+            text.printFontLetter("e.txt", 430, 150, g, 3, 0, 0, 0);
+            text.printFontLetter("s.txt", 550, 150, g, 3, 0, 0, 0);
+            text.printFontLetter("s.txt", 670, 150, g, 3, 0, 0, 0);
             //newline
-            ffont.printFontLetter("quote,txt", 230, 250, g, 1, 0, 0, 0);
-            ffont.printFontLetter("p.txt", 250, 250, g, 3, 0, 0, 0);
-            ffont.printFontLetter("quote,txt", 370, 250, g, 1, 0, 0, 0);
-            ffont.printFontLetter("t.txt", 490, 250, g, 3, 0, 0, 0);
-            ffont.printFontLetter("o.txt", 610, 250, g, 3, 0, 0, 0);
+            text.printFontLetter("p.txt", 250, 250, g, 3, 0, 0, 0);
+            text.printFontLetter("quote.txt", 230, 250, g, 1, 0, 0, 0);
+            text.printFontLetter("t.txt", 490, 250, g, 3, 0, 0, 0);
+            text.printFontLetter("quote.txt", 370, 250, g, 1, 0, 0, 0);
+            text.printFontLetter("o.txt", 610, 250, g, 3, 0, 0, 0);
             //newline
-            ffont.printFontLetter("s.txt", 190, 350, g, 3, 0, 0, 0);
-            ffont.printFontLetter("t.txt", 310, 350, g, 3, 0, 0, 0);
-            ffont.printFontLetter("a.txt", 430, 350, g, 3, 0, 0, 0);
-            ffont.printFontLetter("r.txt", 550, 350, g, 3, 0, 0, 0);
-            ffont.printFontLetter("t.txt", 670, 350, g, 3, 0, 0, 0);
+            text.printFontLetter("s.txt", 190, 350, g, 3, 0, 0, 0);
+            text.printFontLetter("t.txt", 310, 350, g, 3, 0, 0, 0);
+            text.printFontLetter("a.txt", 430, 350, g, 3, 0, 0, 0);//need A
+            text.printFontLetter("r.txt", 550, 350, g, 3, 0, 0, 0);
+            text.printFontLetter("t.txt", 670, 350, g, 3, 0, 0, 0);
+
+            currHighScore.printHighScore(g, text);
 
         }
         else if(fun.checkState() == PLAY || fun.checkState() == PAUSE){
@@ -123,9 +138,9 @@ int main(int argc, char** argv) {
                 fun.changeState(hiss.checkDie(soundEffects, g));
 
                 // Fruit
-                if(hiss.getFirstPt().x == apple.getPoint().x &&
-                   hiss.getFirstPt().y == apple.getPoint().y){
-                    apple.eatenFruit();
+                if(hiss.getPoint(1).x == apple.getPoint().x &&
+                   hiss.getPoint(1).y == apple.getPoint().y){
+                    apple.eatenFruit(hiss);
                     hiss.incLength(1);
                     fun.addPoint();
                     soundEffects.eating(g);
@@ -147,7 +162,7 @@ int main(int argc, char** argv) {
             }
 
             // Draw Fruit
-            apple.drawFriut(apple.getPoint() , g);
+            apple.draw(g);
 
             // Draw Snake
             hiss.draw(g);
@@ -159,20 +174,21 @@ int main(int argc, char** argv) {
                     }
                 }
 
-            ffont.printFontLetter("s.txt", 300, 710, g, 1, 0, 0, 0);
-            ffont.printFontLetter("c.txt", 340, 710, g, 1, 0, 0, 0);
-            ffont.printFontLetter("o.txt", 380, 710, g, 1, 0, 0, 0);
-            ffont.printFontLetter("r.txt", 420, 710, g, 1, 0, 0, 0);
-            ffont.printFontLetter("e.txt", 460, 710, g, 1, 0, 0, 0);
+            text.printFontLetter("s.txt", 50, 710, g, 1, 0, 0, 0);
+            text.printFontLetter("c.txt", 90, 710, g, 1, 0, 0, 0);
+            text.printFontLetter("o.txt", 130, 710, g, 1, 0, 0, 0);
+            text.printFontLetter("r.txt", 170, 710, g, 1, 0, 0, 0);
+            text.printFontLetter("e.txt", 210, 710, g, 1, 0, 0, 0);
+
 
             if(fun.getScore() < 10){
-                stringstream ss;
-                int num = fun.getScore();
-                ss << num;
-                string name = ss.str();
-                ffont.printFont(name + ".txt", 520, 702, g, 3, 0, 0, 0);
-                ss.flush();
-
+                text.printScoreSingle(fun.getScore(), text, g, 300, 702);
+            }
+            else if(fun.getScore() < 100){
+                text.printScoreDouble(fun.getScore(), text, g, 250, 702, 300, 702);
+            }
+            else{
+                text.printScoreTriple(fun.getScore(), text, g, 250, 702, 300, 702, 350, 702);
             }
 
         }
@@ -181,17 +197,44 @@ int main(int argc, char** argv) {
                 for(int x = 0; x < NUM_COL; x++){
                     g.plotPixel(x, y, 250, 20, 20);
                 }
+                if(fun.getScore() > currHighScore.getHighScore()){
+                    currHighScore.setHighScore(fun.getScore());
+                }
             }
 
-            ffont.printFontLetter("g.txt", 100, 150, g, 5, 0, 0, 0);
-            ffont.printFontLetter("a.txt", 300, 150, g, 5, 0, 0, 0);
-            ffont.printFontLetter("m.txt", 500, 150, g, 5, 0, 0, 0);
-            ffont.printFontLetter("e.txt", 700, 150, g, 5, 0, 0, 0);
+            currHighScore.printHighScore(g, text);
+
+            text.printFontLetter("g.txt", 100, 150, g, 5, 0, 0, 0);
+            text.printFontLetter("a.txt", 300, 150, g, 5, 0, 0, 0); //need A
+            text.printFontLetter("m.txt", 500, 150, g, 5, 0, 0, 0); //need M
+            text.printFontLetter("e.txt", 700, 150, g, 5, 0, 0, 0);
             //new line
-            ffont.printFontLetter("o.txt", 100, 300, g, 5, 0, 0, 0);
-            ffont.printFontLetter("v.txt", 300, 300, g, 5, 0, 0, 0);
-            ffont.printFontLetter("e.txt", 500, 300, g, 5, 0, 0, 0);
-            ffont.printFontLetter("r.txt", 700, 300, g, 5, 0, 0, 0);
+            text.printFontLetter("o.txt", 100, 300, g, 5, 0, 0, 0);
+            text.printFontLetter("v.txt", 300, 300, g, 5, 0, 0, 0);
+            text.printFontLetter("e.txt", 500, 300, g, 5, 0, 0, 0);
+            text.printFontLetter("r.txt", 700, 300, g, 5, 0, 0, 0);
+
+            text.printFontLetter("y.txt", 75, 500, g, 2, 0, 0, 0);
+            text.printFontLetter("o.txt", 150, 500, g, 2, 0, 0, 0); //need A
+            text.printFontLetter("u.txt", 225, 500, g, 2, 0, 0, 0); //need M
+            text.printFontLetter("r.txt", 300, 500, g, 2, 0, 0, 0);
+            //new line
+            text.printFontLetter("s.txt", 425, 500, g, 2, 0, 0, 0);
+            text.printFontLetter("c.txt", 500, 500, g, 2, 0, 0, 0);
+            text.printFontLetter("o.txt", 575, 500, g, 2, 0, 0, 0);
+            text.printFontLetter("r.txt", 650, 500, g, 2, 0, 0, 0);
+            text.printFontLetter("e.txt", 725, 500, g, 2, 0, 0, 0);
+
+            if(fun.getScore() < 10){
+                text.printScoreSingle(fun.getScore(), text, g, 850, 495, 5);
+            }
+            else if(fun.getScore() < 100){
+                text.printScoreDouble(fun.getScore(), text, g, 810, 495, 875, 495, 5);
+            }
+            else{
+                text.printScoreTriple(fun.getScore(), text, g, 810, 500, 860, 500, 910, 500, 4);
+            }
+
         }
 
         // Score stuff
@@ -204,10 +247,11 @@ int main(int argc, char** argv) {
     }
 
     fout.open("SnakeSave.txt");
-    fout << "High Score: " << highScore << endl;
+    currHighScore.saveToFile(fout);
     if(fun.checkState() != OVER){
         fout << "Saved Data: " << endl;
         apple.saveToFile(fout);
+        fun.saveToFile(fout);
         hiss.saveToFile(fout);
     }
     fout.close();

@@ -1,3 +1,4 @@
+
 /* AUTHOR: Caleb Beckering, Ruth Edwards, Karina Garza, Mark Josephs
  * ASSIGNMENT TITLE: Group Project: Snake
  * ASSIGNMENT DESCRIPTION: Create a snake-themed game
@@ -9,6 +10,7 @@
 
 snake::snake(int l){
     length = l;
+    dir = UP;
     setColorBody();
     setColorHead();
 
@@ -104,6 +106,21 @@ void snake::draw(SDL_Plotter& g){
         }
     }
 }
+
+void snake::reset(){
+    length = 3;
+    dir = UP;
+
+    for(int i = 0; i < MAX; i++){
+        loc[i] = Point_t(-SIZE, -SIZE);
+    }
+
+    for(int i = 0; i < length; i++){
+        loc[i] = Point_t(NUM_ROW / 2 - i*SIZE,
+                         NUM_COL / 2 - i*SIZE);
+    }
+}
+
 void snake::initialize(ifstream& fin){
     string input;
     char c;

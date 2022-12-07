@@ -27,27 +27,39 @@ void Game::addPoint(){
 int Game::getScore(){
     return score;
 }
+void Game::resetScore(){
+    score = 0;
+}
+void Game::initialize(ifstream& fin){
+    string temp;
+    getline(fin, temp, ':');
+    fin >> score;
+    fin.ignore();
+}
+void Game::saveToFile(ofstream& fout){
+    fout << "Current score: " << score << endl;
+}
 
 void Game::displayYourScore(SDL_Plotter& g){
     //ffont.printFontLetter("Y.txt", 100, 600, g, 3, 0, 0, 0);
     ffont.printFontLetter("O.txt", 200, 600, g, 3, 0, 0, 0);
     ffont.printFontLetter("U.txt", 300, 600, g, 3, 0, 0, 0);
     ffont.printFontLetter("R.txt", 400, 600, g, 3, 0, 0, 0);
-    
+
     ffont.printFontLetter("S.txt", 500, 600, g, 3, 0, 0, 0);
     ffont.printFontLetter("C.txt", 600, 600, g, 3, 0, 0, 0);
     ffont.printFontLetter("O.txt", 700, 600, g, 3, 0, 0, 0);
     ffont.printFontLetter("R.txt", 800, 600, g, 3, 0, 0, 0);
     ffont.printFontLetter("E.txt", 900, 600, g, 3, 0, 0, 0);
-    
+
     if(score < 10){
         stringstream ss;
         int num = score;
         ss << num;
         string name = ss.str();
-        ffont.printFont(name + ".txt", 520, 702, g, 3, 0, 0, 0);
+        ffont.printFontNumber(name + ".txt", 520, 702, g, 3, 0, 0, 0);
         ss.flush();
-        
+
     }
     else if(score >= 10 && (score < 100)){
         stringstream ss;
@@ -62,8 +74,8 @@ void Game::displayYourScore(SDL_Plotter& g){
         fname.append(".txt");
         fname1 = fname1 + second;
         fname1.append(".txt");
-        ffont.printFont(fname, 490, 702, g, 3, 0, 0, 0);
-        ffont.printFont(fname1, 535, 702, g, 3, 0, 0, 0);
+        ffont.printFontNumber(fname, 490, 702, g, 3, 0, 0, 0);
+        ffont.printFontNumber(fname1, 535, 702, g, 3, 0, 0, 0);
         ss.flush();
     }
     else{
@@ -83,9 +95,9 @@ void Game::displayYourScore(SDL_Plotter& g){
         fname1.append(".txt");
         fname2 = fname2 + third;
         fname2.append(".txt");
-        ffont.printFont(fname, 490, 702, g, 3, 0, 0, 0);
-        ffont.printFont(fname1, 535, 702, g, 3, 0, 0, 0);
-        ffont.printFont(fname2, 535, 702, g, 3, 0, 0, 0);
+        ffont.printFontNumber(fname, 490, 702, g, 3, 0, 0, 0);
+        ffont.printFontNumber(fname1, 535, 702, g, 3, 0, 0, 0);
+        ffont.printFontNumber(fname2, 535, 702, g, 3, 0, 0, 0);
         ss.flush();
     }
 }

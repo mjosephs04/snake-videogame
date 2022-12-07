@@ -15,11 +15,11 @@ private:
     int highScore;
     font ffont;
 public:
-    void saveToFile(fstream&);
+    void saveToFile(ofstream&);
     void initialize(ifstream&);
     int getHighScore();
     void setHighScore(int);
-    void printHighScore(SDL_Plotter&);
+    void printHighScore(SDL_Plotter&, font&);
 };
 
 #endif /* scoreboard_h */
