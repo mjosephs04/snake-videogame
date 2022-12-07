@@ -1,38 +1,33 @@
-
 //
-//  gameObject.cpp
-//  SDL Practice
+//  scoreboard.cpp
+//  groupProject(final)
 //
-//  Created by Caleb Beckering on 11/16/22.
+//  Created by Caleb Beckering on 12/5/22.
 //
 
-#include <stdio.h>
-#include "gameObject.h"
-
-Game::Game(){
-    currState = START;
+#include "scoreboard.h"
+#include "constants.h"
+void Scoreboard::saveToFile(fstream& fout){
+    fout << "High Score: " << highScore << endl;
+}
+void Scoreboard::initialize(ifstream& fin){
+    string temp;
+    getline(fin, temp ,':');
+    fin >> highScore;
+}
+int Scoreboard::getHighScore(){
+    return highScore;
 }
 
-GameState Game::checkState(){
-    return currState;
+void Scoreboard::setHighScore(int score){
+    highScore = score;
 }
 
-void Game::changeState(GameState n){
-    currState = n;
-}
-
-void Game::addPoint(){
-    score++;
-}
-int Game::getScore(){
-    return score;
-}
-
-void Game::displayYourScore(SDL_Plotter& g){
-    //ffont.printFontLetter("Y.txt", 100, 600, g, 3, 0, 0, 0);
-    ffont.printFontLetter("O.txt", 200, 600, g, 3, 0, 0, 0);
-    ffont.printFontLetter("U.txt", 300, 600, g, 3, 0, 0, 0);
-    ffont.printFontLetter("R.txt", 400, 600, g, 3, 0, 0, 0);
+void Scoreboard::printHighScore(SDL_Plotter& g){
+    ffont.printFontLetter("H.txt", 0, 600, g, 3, 0, 0, 0);
+    ffont.printFontLetter("I.txt", 100, 600, g, 3, 0, 0, 0);
+    ffont.printFontLetter("G.txt", 200, 600, g, 3, 0, 0, 0);
+    ffont.printFontLetter("H.txt", 0, 600, g, 3, 0, 0, 0);
     
     ffont.printFontLetter("S.txt", 500, 600, g, 3, 0, 0, 0);
     ffont.printFontLetter("C.txt", 600, 600, g, 3, 0, 0, 0);
@@ -40,18 +35,18 @@ void Game::displayYourScore(SDL_Plotter& g){
     ffont.printFontLetter("R.txt", 800, 600, g, 3, 0, 0, 0);
     ffont.printFontLetter("E.txt", 900, 600, g, 3, 0, 0, 0);
     
-    if(score < 10){
+    if(highScore < 10){
         stringstream ss;
-        int num = score;
+        int num = highScore;
         ss << num;
         string name = ss.str();
         ffont.printFont(name + ".txt", 520, 702, g, 3, 0, 0, 0);
         ss.flush();
-        
+
     }
-    else if(score >= 10 && (score < 100)){
+    else if(highScore >= 10 && (highScore < 100)){
         stringstream ss;
-        int num = score;
+        int num = highScore;
         ss << num;
         string number = ss.str();
         char first = number.at(0);
@@ -68,7 +63,7 @@ void Game::displayYourScore(SDL_Plotter& g){
     }
     else{
         stringstream ss;
-        int num = score;
+        int num = highScore;
         ss << num;
         string number = ss.str();
         char first = number.at(0);
