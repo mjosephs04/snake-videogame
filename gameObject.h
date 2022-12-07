@@ -1,31 +1,39 @@
-
 //
 //  gameObject.h
-//  SDL Practice
+//  groupProject(final)
 //
-//  Created by Caleb Beckering on 11/16/22.
+//  Created by Caleb Beckering on 12/6/22.
 //
 
 #ifndef gameObject_h
 #define gameObject_h
+
 #include "fruit.h"
-enum GameState {START, PLAY, PAUSE, OVER};
+#include "constants.h"
+#include "font.h"
+#include "snake.h"
+#include "scoreboard.h"
+
 
 class Game{
 private:
     GameState currState;
-    //SNAKE hissy;
+    snake hissy;
     Fruit apple;
     int score = 0;
+    font ffont;
+    Scoreboard highScore;
 public:
+    
+    Game();
     GameState checkState();
     void changeState(GameState);
-    //void borderCheck(Snake) const;
-    //bool snakeCheck(Snake) const;
     void addPoint();
     int getScore();
-
+    void displayYourScore(SDL_Plotter&);
 
 };
+
+
 
 #endif /* gameObject_h */
