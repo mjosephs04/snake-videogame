@@ -18,11 +18,8 @@
 class Game{
 private:
     GameState currState;
-    snake hissy;
-    Fruit apple;
     int score = 0;
     font ffont;
-    Scoreboard highScore;
 public:
 
     Game();
@@ -34,7 +31,8 @@ public:
     void resetScore();
     void initialize(ifstream&);
     void saveToFile(ofstream&);
-
+    void printScoreInGame(SDL_Plotter&);
+    void printScorePostGame(SDL_Plotter&);
 
 };
 

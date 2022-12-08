@@ -101,3 +101,27 @@ void Game::displayYourScore(SDL_Plotter& g){
         ss.flush();
     }
 }
+
+void Game::printScoreInGame(SDL_Plotter& g){
+    if(score < 10){
+        ffont.printScoreSingle(score, ffont, g, 300, 702);
+    }
+    else if(score < 100){
+        ffont.printScoreDouble(score, ffont, g, 250, 702, 300, 702);
+    }
+    else{
+        ffont.printScoreTriple(score, ffont, g, 250, 702, 300, 702, 350, 702);
+    }
+}
+
+void Game::printScorePostGame(SDL_Plotter& g){
+    if(score < 10){
+        ffont.printScoreSingle(score, ffont, g, 850, 495, 5);
+    }
+    else if(score < 100){
+        ffont.printScoreDouble(score, ffont, g, 810, 495, 875, 495, 5);
+    }
+    else{
+        ffont.printScoreTriple(score, ffont, g, 810, 500, 860, 500, 910, 500, 4);
+    }
+}

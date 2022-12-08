@@ -12,6 +12,7 @@
 #include "sound.h"
 #include "font.h"
 #include "scoreboard.h"
+#include "functions.h"
 using namespace std;
 
 int main(int argc, char** argv) {
@@ -31,9 +32,6 @@ int main(int argc, char** argv) {
     Sound soundEffects(g);
     font text;
     Scoreboard currHighScore;
-
-
-
     color black;
 
     // Initialize
@@ -92,7 +90,7 @@ int main(int argc, char** argv) {
                     }
                     break;
                 case R:
-                    fun.changeState(START);
+                    fun.changeState(PLAY);
                     hiss.reset();
                     fun.resetScore();
                     break;
@@ -101,31 +99,8 @@ int main(int argc, char** argv) {
 
         //Check States
         if(fun.checkState() == START){
-
-
-            for(int y = 0; y < NUM_ROW + SIZE; y++){
-                for(int x = 0; x < NUM_COL; x++){
-                    g.plotPixel(x, y, 255, 255, 255);
-                }
-            }
-            text.printFontLetter("P.txt", 190, 150, g, 3, 0, 0, 0);
-            text.printFontLetter("r.txt", 310, 150, g, 3, 0, 0, 0);
-            text.printFontLetter("e.txt", 430, 150, g, 3, 0, 0, 0);
-            text.printFontLetter("s.txt", 550, 150, g, 3, 0, 0, 0);
-            text.printFontLetter("s.txt", 670, 150, g, 3, 0, 0, 0);
-            //newline
-            text.printFontLetter("p.txt", 250, 250, g, 3, 0, 0, 0);
-            text.printFontLetter("quote.txt", 230, 250, g, 1, 0, 0, 0);
-            text.printFontLetter("t.txt", 490, 250, g, 3, 0, 0, 0);
-            text.printFontLetter("quote.txt", 370, 250, g, 1, 0, 0, 0);
-            text.printFontLetter("o.txt", 610, 250, g, 3, 0, 0, 0);
-            //newline
-            text.printFontLetter("s.txt", 190, 350, g, 3, 0, 0, 0);
-            text.printFontLetter("t.txt", 310, 350, g, 3, 0, 0, 0);
-            text.printFontLetter("a.txt", 430, 350, g, 3, 0, 0, 0);//need A
-            text.printFontLetter("r.txt", 550, 350, g, 3, 0, 0, 0);
-            text.printFontLetter("t.txt", 670, 350, g, 3, 0, 0, 0);
-
+            plotBackground(g);
+            printPressStart(g, text);
             currHighScore.printHighScore(g, text);
 
         }
@@ -173,23 +148,10 @@ int main(int argc, char** argv) {
                         g.plotPixel(x, y, 255, 255, 255);
                     }
                 }
-
-            text.printFontLetter("s.txt", 50, 710, g, 1, 0, 0, 0);
-            text.printFontLetter("c.txt", 90, 710, g, 1, 0, 0, 0);
-            text.printFontLetter("o.txt", 130, 710, g, 1, 0, 0, 0);
-            text.printFontLetter("r.txt", 170, 710, g, 1, 0, 0, 0);
-            text.printFontLetter("e.txt", 210, 710, g, 1, 0, 0, 0);
-
-
-            if(fun.getScore() < 10){
-                text.printScoreSingle(fun.getScore(), text, g, 300, 702);
-            }
-            else if(fun.getScore() < 100){
-                text.printScoreDouble(fun.getScore(), text, g, 250, 702, 300, 702);
-            }
-            else{
-                text.printScoreTriple(fun.getScore(), text, g, 250, 702, 300, 702, 350, 702);
-            }
+            printScoreText(g, text);
+            printEscSave(g, text);
+            printPause(g, text);
+            fun.printScoreInGame(g);
 
         }
         else if(fun.checkState() == OVER){
@@ -203,38 +165,11 @@ int main(int argc, char** argv) {
             }
 
             currHighScore.printHighScore(g, text);
-
-            text.printFontLetter("g.txt", 100, 150, g, 5, 0, 0, 0);
-            text.printFontLetter("a.txt", 300, 150, g, 5, 0, 0, 0); //need A
-            text.printFontLetter("m.txt", 500, 150, g, 5, 0, 0, 0); //need M
-            text.printFontLetter("e.txt", 700, 150, g, 5, 0, 0, 0);
-            //new line
-            text.printFontLetter("o.txt", 100, 300, g, 5, 0, 0, 0);
-            text.printFontLetter("v.txt", 300, 300, g, 5, 0, 0, 0);
-            text.printFontLetter("e.txt", 500, 300, g, 5, 0, 0, 0);
-            text.printFontLetter("r.txt", 700, 300, g, 5, 0, 0, 0);
-
-            text.printFontLetter("y.txt", 75, 500, g, 2, 0, 0, 0);
-            text.printFontLetter("o.txt", 150, 500, g, 2, 0, 0, 0); //need A
-            text.printFontLetter("u.txt", 225, 500, g, 2, 0, 0, 0); //need M
-            text.printFontLetter("r.txt", 300, 500, g, 2, 0, 0, 0);
-            //new line
-            text.printFontLetter("s.txt", 425, 500, g, 2, 0, 0, 0);
-            text.printFontLetter("c.txt", 500, 500, g, 2, 0, 0, 0);
-            text.printFontLetter("o.txt", 575, 500, g, 2, 0, 0, 0);
-            text.printFontLetter("r.txt", 650, 500, g, 2, 0, 0, 0);
-            text.printFontLetter("e.txt", 725, 500, g, 2, 0, 0, 0);
-
-            if(fun.getScore() < 10){
-                text.printScoreSingle(fun.getScore(), text, g, 850, 495, 5);
-            }
-            else if(fun.getScore() < 100){
-                text.printScoreDouble(fun.getScore(), text, g, 810, 495, 875, 495, 5);
-            }
-            else{
-                text.printScoreTriple(fun.getScore(), text, g, 810, 500, 860, 500, 910, 500, 4);
-            }
-
+            
+            printGameOver(g, text);
+            printYourScore(g, text);
+            fun.printScorePostGame(g);
+            printRestart(g, text);
         }
 
         // Score stuff
