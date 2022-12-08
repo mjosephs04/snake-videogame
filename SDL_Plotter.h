@@ -63,6 +63,12 @@ struct point{
 //Color
 struct color{
 	unsigned int R,G,B;
+	/*
+	* description: color constructor - sets R, G, and B
+	* return: N/A
+	* precondition: 3 unsigned integers
+	* postcondition: color exists with initialized R, G, and B
+	*/
 	color(unsigned int R = 0, unsigned int G = 0, unsigned int B = 0){
 		this->R = R;
 		this->G = G;
