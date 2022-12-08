@@ -1,4 +1,3 @@
-
 /* AUTHOR: Caleb Beckering, Ruth Edwards, Karina Garza, Mark Josephs
  * ASSIGNMENT TITLE: Group Project: Snake
  * ASSIGNMENT DESCRIPTION: Create a snake-themed game
@@ -8,20 +7,24 @@
  */
 
 /*
- * Data Abstraction:
- * 		defining all classes and streams needed for snake
- * Input: 
- * 		Input from the user allows the user to access the start, play and gave over pages
+ * Data Abstraction: defining all classes and streams needed for snake
+ *      1 character is defined to hold the input from the user's keyboard
+ *      input file stream & output file stream are declared to access save file
+ * Input:
+ *      Keyboard hits are detected and stored in a character.
+ * 		Input from the user allows the user to access the start, play and gave
+ *      over pages. Arrows control snake movement
  * Process:
- * 		the while loop that updates the plotter and moves the snake 
- * Output: 
- * 		pixels to the plotter that plot a start page, background grid, snake, apple, and 
- *      gave over page. As well as all of the text needed for these pages 
- * Assumptions: 
+ * 		the while loop that updates the plotter and moves the snake
+ * Output:
+ * 		pixels to the plotter that plot a start page, background grid, snake, apple, and
+ *      gave over page. As well as all of the text needed for these pages
+ * Assumptions:
  * 		It is assumed that the user has access to the keyboard
  *      It is assumed that the user has a screen and can see it
  *      It is assumed that the user has SDL PLotter downloaded and installed
  */
+
 
 
 #include <iostream>
