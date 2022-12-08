@@ -13,66 +13,66 @@
 #include "constants.h"
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* description: 
-* return: void
-* precondition:
-* postcondition: 
+* description: plots the background to the Plotter                           *
+* return: void                                                               *
+* precondition: SDL_Plotter exists                                           * 
+* postcondition: background is plotted                                       *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void plotBackground(SDL_Plotter&);
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* description: 
-* return: void
-* precondition:
-* postcondition: 
+* description: prints instructions for how to save progress                  *
+* return: void                                                               *
+* precondition: SDL plotter and font object exist                            *
+* postcondition: save instructions are printed in the corner or potter       *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void printEscSave(SDL_Plotter&, font&);
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* description: 
-* return: void
-* precondition:
-* postcondition: 
+* description: prints instructions for pause to the screen                   *
+* return: void                                                               *
+* precondition: SDL_plotter and font object exist                            *
+* postcondition: pause instructions are printed to the screen                *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void printPause(SDL_Plotter&, font&);
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* description: 
-* return: void
-* precondition:
-* postcondition: 
+* description: Game Over is printed to the screen                            *
+* return: void                                                               *
+* precondition: SDL_Plotter and font object exist                            *
+* postcondition: Game Over is printed to plotter                             *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void printGameOver(SDL_Plotter&, font&);
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* description: 
-* return: void
-* precondition:
-* postcondition: 
+* description: Score is printed to screen                                    *
+* return: void                                                               *
+* precondition: SDL_Plotter and font object exist                            *
+* postcondition: score is printed to screen                                  *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void printYourScore(SDL_Plotter&, font&);
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* description: 
-* return: void
-* precondition:
-* postcondition: 
+* description: the word score is printed to screen                           *
+* return: void                                                               *
+* precondition: SDL_Plotter and font object exist                            *
+* postcondition: the word score is printed to screen                         *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void printScoreText(SDL_Plotter&, font&);
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* description: 
-* return: void
-* precondition:
-* postcondition: 
+* description: Instructions to start game are printed to screen              *
+* return: void                                                               *
+* precondition: SDL_Plotter and font object exist                            *
+* postcondition: start instructions are printed                              *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void printPressStart(SDL_Plotter&, font&);
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* description: 
-* return: void
-* precondition:
-* postcondition: 
+* description: restart instructions are printed to screen                    *
+* return: void                                                               *
+* precondition: SDL_Plotter and text object exist                            *
+* postcondition: restart instructions are printed                            *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void printRestart(SDL_Plotter& g, font& text);
 
