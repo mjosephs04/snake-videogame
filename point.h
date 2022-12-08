@@ -14,39 +14,18 @@
 using namespace std;
 
 struct Point_t{
-   int x,y;
+    int x,y;
 
-   Point_t(const Point_t& p){
-       *this = p;
-   }
-
-   Point_t(int x = 0, int y = 0){
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    * description: constructor for Point_t                                   *
+    * return: N/A                                                            *
+    * precondition: none                                                     *
+    * postcondition: Point_t object exists                                   *
+    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    Point_t(int x = 0, int y = 0){
       this->x = x;
       this->y = y;
-   }
-
-   Point_t& operator+ (const Point_t& p){
-        Point_t result;
-        result.x = x + p.x;
-        result.y = y + p.y;
-        return result;
-   }
-   Point_t& operator- (const Point_t& p){
-        Point_t result;
-        result.x = x - p.x;
-        result.y = y - p.y;
-        return result;
-   }
-
-   Point_t& operator= (const Point_t& p){
-       x = p.x;
-       y = p.y;
-       return *this;
-   }
-
-   double distance(Point_t p){
-       return sqrt(pow(x - p.x, 2) + pow(y - p.y, 2));
-   }
+    }
 };
 
 #endif /* Point_h */
