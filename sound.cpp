@@ -8,10 +8,10 @@
 
 #include "sound.h"
 
-void Sound::dying(SDL_Plotter& g){
+void sound::dying(SDL_Plotter& g){
     g.playSound(dyingSoundFileName);
 }
 
-void Sound::eating(SDL_Plotter& g){
+void sound::eating(SDL_Plotter& g){
     g.playSound(eatingSoundFileName);
 }

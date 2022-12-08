@@ -10,23 +10,23 @@
 #include "constants.h"
 #include "font.h"
 
-void Scoreboard::saveToFile(ofstream& fout){
+void scoreboard::saveToFile(ofstream& fout){
     fout << "High Score: " << highScore << endl;
 }
-void Scoreboard::initialize(ifstream& fin){
+void scoreboard::initialize(ifstream& fin){
     string temp;
     getline(fin, temp ,':');
     fin >> highScore;
 }
-int Scoreboard::getHighScore(){
+int scoreboard::getHighScore(){
     return highScore;
 }
 
-void Scoreboard::setHighScore(int score){
+void scoreboard::setHighScore(int score){
     highScore = score;
 }
 
-void Scoreboard::printHighScore(SDL_Plotter& g, font& text){
+void scoreboard::printHighScore(SDL_Plotter& g, font& text){
 
     ffont.printFontLetter("h.txt", 75, 600, g, 2, 0, 0, 0);
     ffont.printFontLetter("i.txt", 150, 600, g, 2, 0, 0, 0);
@@ -46,7 +46,8 @@ void Scoreboard::printHighScore(SDL_Plotter& g, font& text){
         text.printScoreDouble(highScore, text, g, 810, 595, 875, 595, 5);
     }
     else{
-        text.printScoreTriple(highScore, text, g, 810, 600, 860, 600, 910, 600, 4);
+        text.printScoreTriple(highScore, text, g,
+                              810, 600, 860, 600, 910, 600, 4);
     }
 
 }

@@ -8,15 +8,17 @@
 
 #ifndef fruit_h
 #define fruit_h
+
+#include <fstream>
+
 #include "SDL_Plotter.h"
-#include "point.h"
 #include "constants.h"
 #include "snake.h"
 
 
-class Fruit{
+class fruit{
 private:
-    Point_t p;
+    point p;
 public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * description: fruit constructor, doesn't do anything                    *
@@ -24,7 +26,7 @@ public:
     * precondition: none                                                     *
     * postcondition: fruit object exists                                     *
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    Fruit(){
+    fruit(){
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -41,7 +43,7 @@ public:
     * precondition: fruit object exists                                      *
     * postcondition: nothing is changed, Point is returned                   *
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    Point_t getPoint() const;
+    point getPoint() const;
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * description: mutator function for fruit's Point_t                      *
@@ -58,7 +60,7 @@ public:
     * precondition: fruit object exists, snake object exists                 *
     * postcondition: the fruit has a new random point                        *
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    void eatenFruit(snake);
+    void setRandPoint(snake);
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * description: get fruit's location from a save file                     *

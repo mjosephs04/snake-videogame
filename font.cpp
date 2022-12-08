@@ -7,7 +7,8 @@
  */
 #include "font.h"
 
-void font::printFontNumber(string fileName, int xBaseLocation , int yBaseLocation, SDL_Plotter& g, int thickness, int R, int G, int B){
+void font::printFontNumber(string fileName, int xBase, int yBase,
+                           SDL_Plotter& g, int thickness, int R, int G, int B){
     ifstream iFile;
     int zero[264];
     iFile.open(fileName);
@@ -19,8 +20,8 @@ void font::printFontNumber(string fileName, int xBaseLocation , int yBaseLocatio
     int row = 0;
     for(int k = 0; k < 264; k++){
         if(zero[k] == 1){
-            for(int y = yBaseLocation; y < yBaseLocation + thickness; y++){
-                for(int x = xBaseLocation; x < xBaseLocation + thickness; x++){
+            for(int y = yBase; y < yBase + thickness; y++){
+                for(int x = xBase; x < xBase + thickness; x++){
                     g.plotPixel(x + space, y + row, R, G, G);
                 }
             }
@@ -34,7 +35,8 @@ void font::printFontNumber(string fileName, int xBaseLocation , int yBaseLocatio
     iFile.close();
 }
 
-void font::printFontLetter(string fileName, int xBaseLocation , int yBaseLocation, SDL_Plotter& g, int thickness, int r, int G, int b){
+void font::printFontLetter(string fileName, int xBase, int yBase,
+                           SDL_Plotter& g, int thickness, int r, int G, int b){
     ifstream iFile;
     int letter[1274];
     iFile.open(fileName);
@@ -46,8 +48,8 @@ void font::printFontLetter(string fileName, int xBaseLocation , int yBaseLocatio
     int row = 0;
     for(int k = 0; k < 1274; k++){
         if(letter[k] == 1){
-            for(int y = yBaseLocation; y < yBaseLocation + thickness; y++){
-                for(int x = xBaseLocation; x < xBaseLocation + thickness; x++){
+            for(int y = yBase; y < yBase + thickness; y++){
+                for(int x = xBase; x < xBase + thickness; x++){
                     g.plotPixel(x + space, y + row, r, G, b);
                 }
             }
@@ -61,7 +63,8 @@ void font::printFontLetter(string fileName, int xBaseLocation , int yBaseLocatio
     iFile.close();
 }
 
-void font::printScoreSingle(int score, font& text, SDL_Plotter& g, int x, int y, int thickness){
+void font::printScoreSingle(int score, font& text, SDL_Plotter& g,
+                            int x, int y, int thickness){
     stringstream ss;
     ss << score;
     string name = ss.str();
@@ -70,7 +73,8 @@ void font::printScoreSingle(int score, font& text, SDL_Plotter& g, int x, int y,
 }
 
 
-void font::printScoreDouble(int score, font& text, SDL_Plotter& g, int x1, int y1, int x2, int y2, int thickness){
+void font::printScoreDouble(int score, font& text, SDL_Plotter& g,
+                            int x1, int y1, int x2, int y2, int thickness){
     stringstream ss;
     ss << score;
     string number = ss.str();
@@ -87,7 +91,9 @@ void font::printScoreDouble(int score, font& text, SDL_Plotter& g, int x1, int y
     ss.flush();
 }
 
-void font::printScoreTriple(int score, font& text, SDL_Plotter& g, int x1, int y1, int x2, int y2, int x3, int y3, int thickness){
+void font::printScoreTriple(int score, font& text, SDL_Plotter& g,
+                            int x1, int y1, int x2, int y2,
+                            int x3, int y3, int thickness){
     stringstream ss;;
     ss << score;
     string number = ss.str();

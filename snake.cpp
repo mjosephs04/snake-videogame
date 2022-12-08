@@ -15,11 +15,11 @@ snake::snake(int l){
     setColorHead();
 
     for(int i = 0; i < MAX; i++){
-        loc[i] = Point_t(-SIZE, -SIZE);
+        loc[i] = point(-SIZE, -SIZE);
     }
 
     for(int i = 0; i < length; i++){
-        loc[i] = Point_t(NUM_ROW / 2 - i*SIZE,
+        loc[i] = point(NUM_ROW / 2 - i*SIZE,
                          NUM_COL / 2 - i*SIZE);
     }
 }
@@ -30,14 +30,14 @@ void snake::setColorBody(color c){
 void snake::setColorHead(color c){
     cHead = c;
 }
-void snake::setDir(Direction d){
+void snake::setDir(direction d){
     dir = d;
 }
 void snake::setLength(int l){
     length = l;
 }
 
-Direction snake::getDir(void){
+direction snake::getDir(void){
     return dir;
 }
 int snake::getLength(void){
@@ -48,8 +48,8 @@ void snake::incLength(int n){
     length += n;
 }
 
-GameState snake::checkDie(Sound& soundEffects, SDL_Plotter& g){
-    GameState retVal = PLAY;
+gameState snake::checkDie(sound& soundEffects, SDL_Plotter& g){
+    gameState retVal = PLAY;
     for(int i = 1; i < length; i++){
         if(loc[0].x == loc[i].x && loc[0].y == loc[i].y){
             retVal = OVER;
@@ -112,11 +112,11 @@ void snake::reset(){
     dir = UP;
 
     for(int i = 0; i < MAX; i++){
-        loc[i] = Point_t(-SIZE, -SIZE);
+        loc[i] = point(-SIZE, -SIZE);
     }
 
     for(int i = 0; i < length; i++){
-        loc[i] = Point_t(NUM_ROW / 2 - i*SIZE,
+        loc[i] = point(NUM_ROW / 2 - i*SIZE,
                          NUM_COL / 2 - i*SIZE);
     }
 }
@@ -182,6 +182,6 @@ void snake::saveToFile(ofstream& fout){
 }
 
 
-Point_t snake::getPoint(int i){
+point snake::getPoint(int i){
     return loc[i];
 }

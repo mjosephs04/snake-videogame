@@ -14,7 +14,7 @@
 using namespace std;
 
 
-class Sound{
+class sound{
 private:
     string dyingSoundFileName = "dying-sound.wav";
     string eatingSoundFileName = "eating-apple.wav";
@@ -27,11 +27,11 @@ public:
     *               apple sound file                                         *
     * postcondition: sound object exists and the files are initialized       *
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    Sound(SDL_Plotter& g){
+    sound(SDL_Plotter& g){
         g.initSound(dyingSoundFileName);
         g.initSound(eatingSoundFileName);
     }
-    
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * description: plays dying sound                                         *
     * return: void                                                           *

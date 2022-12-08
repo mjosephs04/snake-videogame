@@ -1,6 +1,9 @@
 /*
  * SDL_Plotter.h
  *
+ * Version 3.1 - Ruth Edwards, Mark Josephs
+ * 12/7/2022
+ *
  * Version 3.0
  * 5/31/2022
  *
@@ -54,21 +57,29 @@ const char R = 7;
 
 //Point
 struct point{
-	int x,y;
-	point(){
-		x = y = 0;
-	}
+    int x,y;
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    * description: constructor for Point_t                                   *
+    * return: N/A                                                            *
+    * precondition: none                                                     *
+    * postcondition: Point_t object exists                                   *
+    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    point(int x = 0, int y = 0){
+      this->x = x;
+      this->y = y;
+    }
 };
 
 //Color
 struct color{
 	unsigned int R,G,B;
-	/*
-	* description: color constructor - sets R, G, and B
-	* return: N/A
-	* precondition: 3 unsigned integers
-	* postcondition: color exists with initialized R, G, and B
-	*/
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	* description: color constructor - sets R, G, and B                      *
+	* return: N/A                                                            *
+	* precondition: 3 unsigned integers                                      *
+	* postcondition: color exists with initialized R, G, and B               *
+	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	color(unsigned int R = 0, unsigned int G = 0, unsigned int B = 0){
 		this->R = R;
 		this->G = G;

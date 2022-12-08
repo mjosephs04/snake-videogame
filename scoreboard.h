@@ -11,7 +11,7 @@
 #include "font.h"
 
 
-class Scoreboard{
+class scoreboard{
 private:
     int highScore;
     font ffont;
@@ -23,7 +23,7 @@ public:
     * postcondition: saves position to a file                                *
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     void saveToFile(ofstream&);
-    
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * description: initializes the scoreboard                                *
     * return: void                                                           *
@@ -31,7 +31,7 @@ public:
     * postcondition: scoreboard is initialized                               *
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     void initialize(ifstream&);
-    
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * description: getting the high score                                    *
     * return: integer                                                        *
@@ -39,7 +39,7 @@ public:
     * postcondition: returns the highscore of the user                       *
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     int getHighScore();
-    
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * description: highscore is set for program                              *
     * return: void                                                           *
@@ -47,7 +47,7 @@ public:
     * postcondition: the highscore is set                                    *
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     void setHighScore(int);
-    
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * description: prints the highscore on the plotter                       *
     * return: void                                                           *

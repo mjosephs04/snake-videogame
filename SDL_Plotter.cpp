@@ -1,6 +1,9 @@
 /*
  * SDL_Plotter.h
  *
+ * Version 3.1 - Ruth Edwards, Mark Josephs
+ * 12/7/2022
+ *
  * Version 3.0
  * 5/20/2022
  *

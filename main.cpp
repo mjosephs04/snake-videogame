@@ -9,16 +9,26 @@
 /*
  * Data Abstraction: defining all classes and streams needed for snake
  *      1 character is defined to hold the input from the user's keyboard
- *      input file stream & output file stream are declared to access save file
+ *      1 input file stream is declared to access data in save file
+ *      1 output file stream is declared to save data into a save file
+ *      1 Plotter object is declared
+ *      1 snake object is declared
+ *      1 fruit object is declared
+ *      1 game object is declared
+ *      1 sound object is declared
+ *      1 font object is declared
+ *      1 scoreboard object is declared
  * Input:
  *      Keyboard hits are detected and stored in a character.
  * 		Input from the user allows the user to access the start, play and gave
  *      over pages. Arrows control snake movement
  * Process:
- * 		the while loop that updates the plotter and moves the snake
+ *      Keyboard hits are used to make the snake move and eat the fruit
+ *      When eaten, fruit respawns in a random location
+ *      When the fruit is eaten, the snake grows and the score increases
  * Output:
- * 		pixels to the plotter that plot a start page, background grid, snake, apple, and
- *      gave over page. As well as all of the text needed for these pages
+ *      pixels are plotted to the plotter, plotting a start page, background
+ *      grid, snake, apple, and text.
  * Assumptions:
  * 		It is assumed that the user has access to the keyboard
  *      It is assumed that the user has a screen and can see it
@@ -26,46 +36,46 @@
  */
 
 
-
 #include <iostream>
 #include <fstream>
 #include <cmath>
 #include <iomanip>
 #include <ctime>
-#include <sstream>
-#include <SDL2/SDL.h>
-#include "SDL_Plotter.h"
-#include "gameObject.h"
-#include "snake.h"
-#include "fruit.h"
-#include "sound.h"
+
+#include "constants.h"
 #include "font.h"
-#include "scoreboard.h"
+#include "fruit.h"
 #include "functions.h"
+#include "game.h"
+#include "scoreboard.h"
+#include "SDL_Plotter.h"
+#include "snake.h"
+#include "sound.h"
+
 using namespace std;
 
 int main(int argc, char** argv) {
 // Data Abstraction
     char key;
-    int highScore;
 
     ifstream fin;
     ofstream fout;
     string input;
 
-    SDL_Plotter g(NUM_ROW + 50, NUM_COL);
+    SDL_Plotter g(NUM_ROW + SIZE, NUM_COL);
     snake hiss(3);
-    Fruit apple;
-    Direction dir;
-    Game fun;
-    Sound soundEffects(g);
+    fruit apple;
+    game fun;
+    sound soundEffects(g);
     font text;
-    Scoreboard currHighScore;
+    scoreboard currHighScore;
 
     // Initialize
     srand(time(0));
-    apple.eatenFruit(hiss);
+    apple.setRandPoint(hiss);
+    fun.changeState(START);
 
+    // Input - Get Data From File
     fin.open("SnakeSave.txt");
     currHighScore.initialize(fin);
     if(getline(fin, input, ':')){
@@ -75,11 +85,10 @@ int main(int argc, char** argv) {
     }
     fin.close();
 
-    fun.changeState(START);
-
     // Main Loop
     while(!g.getQuit()){
-    //User Interface
+
+        // Input - User Interface
         if(g.kbhit()){
             key = g.getKey();
 
@@ -118,9 +127,13 @@ int main(int argc, char** argv) {
                     }
                     break;
                 case R:
-                    fun.changeState(PLAY);
-                    hiss.reset();
-                    fun.resetScore();
+                    if(fun.checkState() == OVER){
+                        apple.setRandPoint(hiss);
+                        hiss.reset();
+
+                        fun.changeState(PLAY);
+                        fun.resetScore();
+                    }
                     break;
             }
         }
@@ -132,18 +145,18 @@ int main(int argc, char** argv) {
             currHighScore.printHighScore(g, text);
 
         }
-        else if(fun.checkState() == PLAY || fun.checkState() == PAUSE){
+        else if(fun.checkState() != OVER){
             if(fun.checkState() == PLAY){
+                // Check if it's dead
+                fun.changeState(hiss.checkDie(soundEffects, g));
+
                 // Advance
                 hiss.advance();
-
-                // die check
-                fun.changeState(hiss.checkDie(soundEffects, g));
 
                 // Fruit
                 if(hiss.getPoint(1).x == apple.getPoint().x &&
                    hiss.getPoint(1).y == apple.getPoint().y){
-                    apple.eatenFruit(hiss);
+                    apple.setRandPoint(hiss);
                     hiss.incLength(1);
                     fun.addPoint();
                     soundEffects.eating(g);
@@ -151,7 +164,7 @@ int main(int argc, char** argv) {
 
             }
 
-        // Draw
+        // Output: Draw
             // Draw background
             for(int y = 0; y < NUM_ROW; y++){
                 for(int x = 0; x < NUM_COL; x++){
@@ -170,19 +183,19 @@ int main(int argc, char** argv) {
             // Draw Snake
             hiss.draw(g);
 
-            //draws the white bar at bottom
+            // Draw Menu at Bottom
             for(int y = NUM_ROW; y < NUM_ROW + SIZE; y++){
-                    for(int x = 0; x < NUM_COL; x++){
-                        g.plotPixel(x, y, 255, 255, 255);
-                    }
+                for(int x = 0; x < NUM_COL; x++){
+                    g.plotPixel(x, y, 255, 255, 255);
                 }
+            }
             printScoreText(g, text);
             printEscSave(g, text);
             printPause(g, text);
             fun.printScoreInGame(g);
 
         }
-        else if(fun.checkState() == OVER){
+        else{
             for(int y = 0; y < NUM_ROW + SIZE; y++){
                 for(int x = 0; x < NUM_COL; x++){
                     g.plotPixel(x, y, 250, 20, 20);
@@ -193,22 +206,18 @@ int main(int argc, char** argv) {
             }
 
             currHighScore.printHighScore(g, text);
-            
+
             printGameOver(g, text);
             printYourScore(g, text);
             fun.printScorePostGame(g);
             printRestart(g, text);
         }
 
-        // Score stuff
-        if(fun.getScore() > highScore){
-            highScore = fun.getScore();
-        }
-
         g.update();
         g.Sleep(SPEED);
     }
 
+    // Save Data to File
     fout.open("SnakeSave.txt");
     currHighScore.saveToFile(fout);
     if(fun.checkState() != OVER){

@@ -9,19 +9,19 @@
 #ifndef SNAKE_H_INCLUDED
 #define SNAKE_H_INCLUDED
 
-#include "SDl_PLotter.h"
-#include "point.h"
+#include "SDL_PLotter.h"
 #include "constants.h"
 #include "sound.h"
+
 #include <fstream>
 
 
 class snake{
 private:
     int length;
-    Direction dir;
+    direction dir;
     color cBody, cHead;
-    Point_t loc[MAX];
+    point loc[MAX];
 
 public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -52,7 +52,7 @@ public:
     * precondition: snake object exists, direction exists                    *
     * postcondition: the direction of the snake is changed                   *
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    void setDir(Direction d);
+    void setDir(direction d);
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * description: mutator function for the length of the snake              *
     * return: void                                                           *
@@ -67,7 +67,7 @@ public:
     * precondition: snake object exists, integer exists                      *
     * postcondition: data is not changed                                     *
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    Point_t getPoint(int);
+    point getPoint(int);
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * description: accessor function for the direction of the snake          *
@@ -75,7 +75,7 @@ public:
     * precondition: snake object exists                                      *
     * postcondition: nothing is changed                                      *
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    Direction getDir(void);
+    direction getDir(void);
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * description: accessor function for the length of the snake             *
     * return: integer                                                        *
@@ -98,7 +98,7 @@ public:
     * precondition: snake object exists, plotter exists, sound effects exist *
     * postcondition: returns if the snake is dead                            *
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    GameState checkDie(Sound&, SDL_Plotter&);
+    gameState checkDie(sound&, SDL_Plotter&);
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     * description: advance the snake                                         *

@@ -49,7 +49,7 @@ void printYourScore(SDL_Plotter& g, font& text){
     text.printFontLetter("o.txt", 150, 500, g, 2, 0, 0, 0);
     text.printFontLetter("u.txt", 225, 500, g, 2, 0, 0, 0);
     text.printFontLetter("r.txt", 300, 500, g, 2, 0, 0, 0);
-    
+
     text.printFontLetter("s.txt", 425, 500, g, 2, 0, 0, 0);
     text.printFontLetter("c.txt", 500, 500, g, 2, 0, 0, 0);
     text.printFontLetter("o.txt", 575, 500, g, 2, 0, 0, 0);
@@ -96,7 +96,6 @@ void plotBackground(SDL_Plotter& g){
 
 
 void printRestart(SDL_Plotter& g, font& text){
-
     text.printFontLetter("r.txt", 290, 700, g, 1, 0, 0, 0);
     text.printFontLetter("e.txt", 330, 700, g, 1, 0, 0, 0);
     text.printFontLetter("s.txt", 370, 700, g, 1, 0, 0, 0);
