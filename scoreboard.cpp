@@ -39,14 +39,14 @@ void Scoreboard::printHighScore(SDL_Plotter& g, font& text){
     ffont.printFontLetter("r.txt", 650, 600, g, 2, 0, 0, 0);
     ffont.printFontLetter("e.txt", 725, 600, g, 2, 0, 0, 0);
 
-            if(highScore < 10){
-                text.printScoreSingle(highScore, text, g, 850, 595, 5);
-            }
-            else if(highScore < 100){
-                text.printScoreDouble(highScore, text, g, 810, 595, 875, 595, 5);
-            }
-            else{
-                text.printScoreTriple(highScore, text, g, 810, 600, 860, 600, 910, 600, 4);
-            }
+    if(highScore < 10){
+        text.printScoreSingle(highScore, text, g, 850, 595, 5);
+    }
+    else if(highScore < 100){
+        text.printScoreDouble(highScore, text, g, 810, 595, 875, 595, 5);
+    }
+    else{
+        text.printScoreTriple(highScore, text, g, 810, 600, 860, 600, 910, 600, 4);
+    }
 
 }
