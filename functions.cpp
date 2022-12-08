@@ -1,14 +1,14 @@
-//
-//  functions.cpp
-//  groupProject(final)
-//
-//  Created by Caleb Beckering on 12/7/22.
-//
+/* AUTHOR: Caleb Beckering, Ruth Edwards, Karina Garza, Mark Josephs
+ * ASSIGNMENT TITLE: Group Project: Snake
+ * ASSIGNMENT DESCRIPTION: Create a snake-themed game
+ * DUE DATE: 12-07-22
+ * DATE CREATED: 11-03-22
+ * DATE LAST MODIFIED: 12-07-22
+ */
 
 #include "functions.h"
 
 void printEscSave(SDL_Plotter& g, font& text){
-
     text.printFontLetter("s.txt", 650, 710, g, 1, 0, 0, 0);
     text.printFontLetter("a.txt", 690, 710, g, 1, 0, 0, 0);
     text.printFontLetter("v.txt", 740, 710, g, 1, 0, 0, 0);
