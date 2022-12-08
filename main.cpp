@@ -32,7 +32,6 @@ int main(int argc, char** argv) {
     Sound soundEffects(g);
     font text;
     Scoreboard currHighScore;
-    color black;
 
     // Initialize
     srand(time(0));
